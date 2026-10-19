@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1152" viewBox="0 0 2048 1152" role="img" aria-labelledby="title desc">
+  <title id="title">简单入门 coding agent</title>
+  <desc id="desc">深色终端窗口与发光的 agent 循环节点，中间由数据流曲线相连</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0A101E"/>
+      <stop offset="1" stop-color="#101B31"/>
+    </linearGradient>
+    <radialGradient id="glowTeal" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowOrange" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FB923C" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#FB923C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowViolet" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#A78BFA" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flowA" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2DD4BF"/>
+      <stop offset="1" stop-color="#60A5FA"/>
+    </linearGradient>
+    <linearGradient id="flowB" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FB923C"/>
+      <stop offset="1" stop-color="#F472B6"/>
+    </linearGradient>
+    <linearGradient id="flowC" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+    <linearGradient id="termBar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B2942"/>
+      <stop offset="1" stop-color="#141F35"/>
+    </linearGradient>
+    <pattern id="dots" width="46" height="46" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="2" fill="#3B4A66" opacity="0.35"/>
+    </pattern>
+  </defs>
+
+  <!-- background -->
+  <rect width="2048" height="1152" fill="url(#bg)"/>
+  <rect width="2048" height="1152" fill="url(#dots)"/>
+  <circle cx="330" cy="180" r="620" fill="url(#glowTeal)"/>
+  <circle cx="1760" cy="1000" r="640" fill="url(#glowOrange)"/>
+  <circle cx="1500" cy="120" r="480" fill="url(#glowViolet)"/>
+
+  <!-- ===== terminal window (left) ===== -->
+  <g>
+    <rect x="168" y="238" width="880" height="640" rx="22" fill="#0D1626" stroke="#24344E" stroke-width="2.5"/>
+    <path d="M168 260 a22 22 0 0 1 22-22 h836 a22 22 0 0 1 22 22 v46 h-880 z" fill="url(#termBar)"/>
+    <line x1="168" y1="306" x2="1048" y2="306" stroke="#24344E" stroke-width="2"/>
+    <circle cx="212" cy="272" r="9" fill="#F87171"/>
+    <circle cx="246" cy="272" r="9" fill="#FBBF24"/>
+    <circle cx="280" cy="272" r="9" fill="#34D399"/>
+
+    <!-- prompt line -->
+    <path d="M216 372 l30 22 -30 22" fill="none" stroke="#2DD4BF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="272" y="362" width="360" height="22" rx="11" fill="#2DD4BF" opacity="0.9"/>
+
+    <!-- abstract code lines -->
+    <g fill="#3D5378">
+      <rect x="216" y="446" width="34" height="16" rx="8"/>
+      <rect x="264" y="446" width="300" height="16" rx="8"/>
+      <rect x="216" y="486" width="120" height="16" rx="8" fill="#31517B"/>
+      <rect x="216" y="526" width="460" height="16" rx="8"/>
+      <rect x="216" y="566" width="80" height="16" rx="8" fill="#31517B"/>
+      <rect x="310" y="566" width="230" height="16" rx="8"/>
+    </g>
+    <!-- diff motif -->
+    <rect x="216" y="622" width="20" height="16" rx="4" fill="#34D399"/>
+    <rect x="250" y="622" width="380" height="16" rx="8" fill="#2C6A54"/>
+    <rect x="216" y="662" width="20" height="16" rx="4" fill="#F87171"/>
+    <rect x="250" y="662" width="260" height="16" rx="8" fill="#7A3B47"/>
+    <rect x="216" y="702" width="20" height="16" rx="4" fill="#34D399"/>
+    <rect x="250" y="702" width="430" height="16" rx="8" fill="#2C6A54"/>
+
+    <!-- blinking cursor -->
+    <rect x="216" y="766" width="30" height="34" rx="6" fill="#E2E8F0"/>
+    <rect x="266" y="776" width="180" height="14" rx="7" fill="#3D5378"/>
+  </g>
+
+  <!-- ===== agent loop (right) ===== -->
+  <!-- flow curves: hub to each satellite, with arrowheads -->
+  <g fill="none" stroke-width="7" stroke-linecap="round">
+    <path d="M1470 520 C 1380 470 1330 430 1300 396" stroke="url(#flowA)" stroke-dasharray="2 20"/>
+    <path d="M1710 520 C 1760 480 1770 460 1758 428" stroke="url(#flowB)" stroke-dasharray="2 20"/>
+    <path d="M1454 760 C 1380 830 1352 876 1336 926" stroke="url(#flowC)" stroke-dasharray="2 20"/>
+  </g>
+  <g>
+    <path d="M1312 404 l26 -6 -8 26 z" fill="#60A5FA"/>
+    <path d="M1748 412 l26 8 -16 24 z" fill="#F472B6"/>
+    <path d="M1352 932 l-22 16 -4 -27 z" fill="#A78BFA"/>
+  </g>
+
+  <!-- satellite: file tree -->
+  <g>
+    <rect x="1078" y="258" width="216" height="216" rx="26" fill="#101B30" stroke="#2A3B58" stroke-width="2.5"/>
+    <g stroke="#60A5FA" stroke-width="9" stroke-linecap="round" fill="none">
+      <path d="M1130 316 h84"/>
+      <path d="M1130 356 h56"/>
+      <path d="M1130 396 h84"/>
+      <path d="M1130 436 h56"/>
+    </g>
+    <g fill="#60A5FA">
+      <circle cx="1112" cy="316" r="7"/>
+      <circle cx="1112" cy="356" r="7"/>
+      <circle cx="1112" cy="396" r="7"/>
+      <circle cx="1112" cy="436" r="7"/>
+    </g>
+    <path d="M1186 340 v72 h34" stroke="#2DD4BF" stroke-width="7" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- satellite: git branch -->
+  <g>
+    <rect x="1650" y="210" width="200" height="200" rx="26" fill="#101B30" stroke="#2A3B58" stroke-width="2.5"/>
+    <path d="M1716 270 v80 M1716 274 a16 16 0 1 0 -0.1 0 M1716 350 a16 16 0 1 0 -0.1 0" stroke="#FB923C" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <circle cx="1784" cy="294" r="15" fill="none" stroke="#F472B6" stroke-width="8"/>
+    <circle cx="1784" cy="350" r="15" fill="none" stroke="#F472B6" stroke-width="8"/>
+    <path d="M1784 309 v26 M1732 296 q24 16 33 20" stroke="#F472B6" stroke-width="8" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- satellite: terminal -->
+  <g>
+    <rect x="1108" y="902" width="200" height="200" rx="26" fill="#101B30" stroke="#2A3B58" stroke-width="2.5"/>
+    <path d="M1152 962 l22 16 -22 16" fill="none" stroke="#A78BFA" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1188 1000 h56" stroke="#A78BFA" stroke-width="8" stroke-linecap="round"/>
+    <rect x="1152" y="1022" width="16" height="20" rx="4" fill="#A78BFA"/>
+  </g>
+
+  <!-- hub: agent head -->
+  <g>
+    <circle cx="1560" cy="648" r="196" fill="#101B30" stroke="#2DD4BF" stroke-width="4"/>
+    <circle cx="1560" cy="648" r="228" fill="none" stroke="#2DD4BF" stroke-width="2" opacity="0.35"/>
+    <circle cx="1560" cy="648" r="262" fill="none" stroke="#2DD4BF" stroke-width="1.5" opacity="0.15"/>
+    <line x1="1560" y1="486" x2="1560" y2="446" stroke="#2DD4BF" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="1560" cy="432" r="14" fill="#2DD4BF"/>
+    <rect x="1462" y="540" width="196" height="180" rx="44" fill="#15243D" stroke="#2DD4BF" stroke-width="4"/>
+    <circle cx="1518" cy="616" r="17" fill="#2DD4BF"/>
+    <circle cx="1602" cy="616" r="17" fill="#2DD4BF"/>
+    <path d="M1516 676 q44 30 88 0" fill="none" stroke="#2DD4BF" stroke-width="9" stroke-linecap="round"/>
+  </g>
+
+  <!-- sparkles -->
+  <g fill="#5EEAD4">
+    <path d="M1210 170 l7 20 20 7 -20 7 -7 20 -7 -20 -20 -7 20 -7 z" opacity="0.9"/>
+    <path d="M1836 480 l5 15 15 5 -15 5 -5 15 -5 -15 -15 -5 15 -5 z" opacity="0.6"/>
+  </g>
+  <g fill="#FDBA74">
+    <path d="M1290 1080 l6 17 17 6 -17 6 -6 17 -6 -17 -17 -6 17 -6 z" opacity="0.7"/>
+    <path d="M930 130 l5 14 14 5 -14 5 -5 14 -5 -14 -14 -5 14 -5 z" opacity="0.5"/>
+    <path d="M1960 620 l6 18 18 6 -18 6 -6 18 -6 -18 -18 -6 18 -6 z" opacity="0.75"/>
+  </g>
+</svg>

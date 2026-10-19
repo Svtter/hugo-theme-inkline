@@ -1,0 +1,77 @@
+{{ $terms := .GetTerms "series" }}
+{{ $term := "" }}{{ with $terms }}{{ $term = index . 0 }}{{ end }}
+{{ $episodes := slice }}
+{{ $pos := 0 }}
+{{ if $term }}
+  {{ $episodes = $term.Pages.ByWeight }}
+  {{ range $i, $e := $episodes }}{{ if eq $e.Permalink $.Permalink }}{{ $pos = add $i 1 }}{{ end }}{{ end }}
+{{ end }}
+{{ $epTotal := len $episodes }}
+
+<div class="after-note">
+  <div class="tag-row">
+    {{ range .GetTerms "tags" }}<a class="tag" href="{{ .RelPermalink }}">{{ .Page.Title }}</a>{{ end }}
+  </div>
+
+  <div class="license-row">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>
+    <span>Licensed under {{ site.Params.license | default "CC BY-NC-SA 4.0" }} · 转载请署名并保持相同许可</span>
+  </div>
+
+  {{ if $term }}
+  <div class="series-nav-label"><b>SERIES</b><span>{{ $term.Page.Title }} · {{ $epTotal }} 篇中的第 {{ $pos }} 篇</span></div>
+  <div class="episodes">
+    {{ range $i, $e := $episodes }}
+    <a href="{{ $e.RelPermalink }}"{{ if eq $e.Permalink $.Permalink }} class="current"{{ end }}>
+      <span class="no">{{ printf "%02d" (add $i 1) }}</span><span class="t">{{ replace $e.Title ".md" "" }}</span>
+    </a>
+    {{ end }}
+  </div>
+  <div class="series-nav">
+    {{ $prev := "" }}{{ $next := "" }}
+    {{ range $i, $e := $episodes }}
+      {{ if eq $e.Permalink $.Permalink }}
+        {{ if gt $i 0 }}{{ $prev = index $episodes (sub $i 1) }}{{ end }}
+        {{ if lt $i (sub $epTotal 1) }}{{ $next = index $episodes (add $i 1) }}{{ end }}
+      {{ end }}
+    {{ end }}
+    {{ with $prev }}
+    <a href="{{ .RelPermalink }}">
+      <span class="dir">← PREV</span>
+      <span class="t">{{ .Title }}</span>
+    </a>
+    {{ else }}
+    <a class="empty"><span class="dir">← PREV</span><span class="t">已是本系列第一篇</span></a>
+    {{ end }}
+    {{ with $next }}
+    <a class="next" href="{{ .RelPermalink }}">
+      <span class="dir">NEXT →</span>
+      <span class="t">{{ .Title }}</span>
+    </a>
+    {{ else }}
+    <a class="next empty"><span class="dir">NEXT →</span><span class="t">已是本系列最新一篇</span></a>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{ $rel := site.RegularPages.Related . }}
+  {{ if lt (len $rel) 4 }}
+    {{ range where (site.RegularPages.ByDate.Reverse) "Permalink" "!=" $.Permalink }}
+      {{ if and (lt (len $rel) 4) (not (in $rel .)) }}{{ $rel = $rel | append . }}{{ end }}
+    {{ end }}
+  {{ end }}
+  {{ if gt (len $rel) 0 }}
+  <div class="related-label"><b>RELATED</b><span>相关文章</span></div>
+  <div class="related">
+    {{ range first 4 $rel }}
+    {{ $cover := partial "cover-of.html" . }}
+    <a href="{{ .RelPermalink }}">
+      <div class="rc{{ if not $cover }} noimg{{ end }}"{{ with $cover }} style="background-image:url('{{ . }}')"{{ end }}></div>
+      <span class="rt">{{ .Title }}</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{ partial "comments.html" . }}
+</div>

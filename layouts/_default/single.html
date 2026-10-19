@@ -1,0 +1,65 @@
+{{ define "main" }}
+{{ $host := (urls.Parse site.BaseURL).Hostname }}
+{{ $cover := partial "cover-of.html" . }}
+{{ $seriesTerms := .GetTerms "series" }}
+
+<header class="article-head">
+  <div class="breadcrumb">
+    <a href="{{ site.Home.RelPermalink }}">~/{{ $host }}</a><span class="sep">/</span>
+    {{ with $seriesTerms }}
+    <a href="{{ (index . 0).Page.RelPermalink }}">series</a><span class="sep">/</span><a href="{{ (index . 0).Page.RelPermalink }}">{{ (index . 0).Page.Title }}</a><span class="sep">/</span>
+    {{ else }}
+    {{ with first 1 (.GetTerms "categories") }}<a href="{{ (index . 0).RelPermalink }}">{{ (index . 0).Page.Title }}</a><span class="sep">/</span>{{ end }}
+    {{ end }}
+    {{ .Slug | default .File.ContentBaseName }}
+  </div>
+
+  <div class="meta-row">
+    {{ with $seriesTerms }}
+    {{ $t := index . 0 }}
+    {{ $eps := $t.Pages.ByWeight }}
+    {{ $pos := 0 }}{{ range $i, $e := $eps }}{{ if eq $e.Permalink $.Permalink }}{{ $pos = add $i 1 }}{{ end }}{{ end }}
+    <a class="series" href="{{ $t.Page.RelPermalink }}">系列 · {{ $t.Page.Title }} {{ $pos }}/{{ len $eps }}</a>
+    <span class="sep">/</span>
+    {{ end }}
+    {{ range .GetTerms "categories" }}<span class="cat">{{ .Page.Title }}</span>{{ end }}
+    <span class="sep">/</span>
+    <span>{{ .Date.Format "2006-01-02 15:04" }}</span>
+    <span class="sep">/</span>
+    <span>约 {{ .WordCount }} 字 · {{ .ReadingTime }} min</span>
+  </div>
+
+  <h1>{{ .Title }}</h1>
+
+  {{ with .Description }}
+  <p class="lede">{{ . }}</p>
+  {{ end }}
+
+  {{ with $cover }}
+  <figure class="cover-fig">
+    <img src="{{ . }}" alt="{{ $.Title }} 封面">
+    <figcaption><b>cover</b> · {{ $.Title }}</figcaption>
+  </figure>
+  {{ end }}
+</header>
+
+<div class="article-grid">
+  <article class="prose">
+    {{ .Content }}
+    <div class="footnote">
+      {{ with .Params.src }}来源：{{ . }} · {{ end }}
+      发布于 {{ .Date.Format "2006-01-02" }}{{ with .Lastmod }}{{ if not (.Equal $.Date) }} · 更新于 {{ .Format "2006-01-02" }}{{ end }}{{ end }}
+    </div>
+  </article>
+
+  <aside class="toc">
+    <div class="toc-label"><span class="hash">#</span> 目录 · TOC</div>
+    <nav id="toc-nav">
+      {{ .Fragments.ToHTML 2 3 false }}
+    </nav>
+  </aside>
+</div>
+
+{{ partial "series-block.html" . }}
+
+{{ end }}

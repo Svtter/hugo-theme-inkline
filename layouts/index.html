@@ -1,0 +1,69 @@
+{{ define "main" }}
+{{ $host := (urls.Parse site.BaseURL).Hostname }}
+{{ $posts := where site.RegularPages "Section" "in" site.MainSections }}
+{{ $paged := .Paginate ($posts.ByDate.Reverse) }}
+{{ $cur := $paged }}
+{{ $pages := $cur.Pages }}
+{{ $featured := index $pages 0 }}
+{{ $featuredCover := "" }}
+{{ if $featured }}{{ $featuredCover = partial "cover-of.html" $featured }}{{ end }}
+
+{{ partial "hero.html" . }}
+
+<div class="wrap layout">
+  <div class="feed">
+
+    {{ with $featured }}
+    <a class="featured" href="{{ .RelPermalink }}">
+      <div class="cover"{{ with $featuredCover }} style="background-image:url('{{ . }}')"{{ end }}>
+        <span class="badge">FEATURED</span>
+      </div>
+      <div class="body">
+        <div class="meta-row">
+          {{ range first 2 (.GetTerms "categories") }}<span class="cat">{{ .Page.Title }}</span>{{ end }}
+          {{ with .GetTerms "series" }}<span class="sep">/</span><span class="series">系列 · {{ (index . 0).Page.Title }}</span>{{ end }}
+        </div>
+        <h3>{{ .Title }}</h3>
+        <p>{{ .Description | default .Summary | plainify }}</p>
+        <div class="foot">
+          <span>{{ .Date.Format "2006-01-02" }} · {{ .ReadingTime }} min</span>
+          <span class="read">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    {{ end }}
+
+    <div class="section-head">
+      <span class="no">§ 01</span>
+      <h2>最新文章</h2>
+      <span class="rule"></span>
+      <a class="more" href="/post/">全部 {{ len $posts }} 篇 →</a>
+    </div>
+
+    <div class="post-list">
+      {{ $total := $paged.TotalNumberOfElements }}
+      {{ $offset := mul (sub $cur.PageNumber 1) $paged.PagerSize }}
+      {{ range $idx, $p := after 1 $pages }}
+      <a class="post-item" href="{{ $p.RelPermalink }}">
+        <span class="date">{{ $p.Date.Format "06-01-02" }}</span><span class="no">{{ printf "%03d" (sub (sub $total 1) (add $offset $idx 1)) }}</span>
+        <span class="title">{{ $p.Title }}</span>
+        <span class="aside">{{ with first 1 ($p.GetTerms "categories") }}<span class="cat">{{ (index . 0).Page.Title }}</span>{{ end }}<span class="sep">·</span>{{ $p.ReadingTime }} min</span>
+      </a>
+      {{ end }}
+    </div>
+
+    {{ partial "pagination.html" $paged }}
+
+    <div class="section-head">
+      <span class="no">§ 02</span>
+      <h2>连载系列</h2>
+      <span class="rule"></span>
+      <a class="more" href="/series/">全部 {{ site.Taxonomies.series.Len }} 个系列 →</a>
+    </div>
+    {{ partial "series-grid.html" . }}
+  </div>
+
+  {{ partial "sidebar.html" . }}
+</div>
+
+{{ end }}

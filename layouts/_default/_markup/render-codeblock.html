@@ -1,0 +1,4 @@
+<div class="codeblock">
+  <div class="bar"><span class="dots">● ● ●</span><span>{{ .Type | default "text" }}</span></div>
+  {{ highlight .Inner (.Type | default "text") }}
+</div>

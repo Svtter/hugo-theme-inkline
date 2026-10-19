@@ -1,0 +1,20 @@
+name = "Inkline"
+license = "MIT"
+licenselink = "https://github.com/Svtter/hugo-theme-inkline/blob/main/LICENSE"
+description = "墨线 Inkline —— 终端工程感 × 中文期刊排发的 Hugo 博客主题：衬线正文 + 等宽元数据、全局三档字号、深浅双主题、系列目录与相关文章"
+homepage = "https://github.com/Svtter/hugo-theme-inkline"
+tags = ["blog", "chinese", "typography", "dark mode", "search", "series", "minimal"]
+features = [
+  "深浅双主题（跟随系统，可记忆）",
+  "全局三档字号（小/中/大）",
+  "客户端全文搜索（index.json）",
+  "连载系列目录与进度",
+  "相关文章推荐",
+  "utterances 评论",
+  "归档年度柱状图",
+]
+min_version = "0.120.0"
+
+[author]
+  name = "Svtter"
+  homepage = "https://svtter.cn"

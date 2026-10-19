@@ -1,0 +1,4 @@
+{{/* 返回页面封面 URL（字符串），无则返回空。兼容 Stack 风格的 map 形式 */}}
+{{ $c := .Params.cover | default .Params.image }}
+{{ if reflect.IsMap $c }}{{ $c = $c.image }}{{ end }}
+{{ return $c | default "" }}

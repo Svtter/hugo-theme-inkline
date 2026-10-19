@@ -1,0 +1,28 @@
+{{ $host := (urls.Parse site.BaseURL).Hostname }}
+<footer>
+  <div class="statusline">
+    <div class="wrap statusline-inner">
+      <span class="seg mode">-- NORMAL --</span>
+      <span class="seg">~/{{ $host }}{{ if not .IsHome }}{{ .RelPermalink }}{{ end }}</span>
+      <span class="grow"></span>
+      {{ if .IsPage }}
+      <span class="seg right">{{ .ReadingTime }} min read</span>
+      {{ end }}
+      <span class="seg">{{ site.Params.license | default "CC BY-NC-SA 4.0" }}</span>
+    </div>
+  </div>
+  <div class="footer-note">
+    © {{ site.Params.since }}–{{ now.Year }} {{ site.Params.name | default site.Title }} · Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> · 主题 <a href="https://github.com/Svtter/hugo-theme-inkline" target="_blank" rel="noopener">墨线 Inkline</a>
+  </div>
+</footer>
+
+<button class="icon-btn" id="btn-top" title="回到顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5m-7 7 7-7 7 7"/></svg>
+</button>
+
+{{ with resources.Get "js/main.js" }}
+{{ with . | minify | fingerprint }}
+<script>window.INKLINE = { searchIndex: {{ "index.json" | relURL }} };</script>
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{ end }}
+{{ end }}

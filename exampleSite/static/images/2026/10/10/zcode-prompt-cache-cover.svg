@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1152" viewBox="0 0 2048 1152" role="img" aria-labelledby="title desc">
+  <title id="title">ZCode 的 Prompt 缓存架构</title>
+  <desc id="desc">三条按稳定度分桶的 system message 各带缓存断点，右侧为逐级嵌套的前缀缓存示意</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0A101E"/>
+      <stop offset="1" stop-color="#101B31"/>
+    </linearGradient>
+    <radialGradient id="glowTeal" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowOrange" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FB923C" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#FB923C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowViolet" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#A78BFA" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowAmber" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FBBF24" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#FBBF24" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2DD4BF"/>
+      <stop offset="1" stop-color="#60A5FA"/>
+    </linearGradient>
+    <pattern id="dots" width="46" height="46" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="2" fill="#3B4A66" opacity="0.35"/>
+    </pattern>
+  </defs>
+
+  <!-- background -->
+  <rect width="2048" height="1152" fill="url(#bg)"/>
+  <rect width="2048" height="1152" fill="url(#dots)"/>
+  <circle cx="340" cy="200" r="620" fill="url(#glowTeal)"/>
+  <circle cx="1740" cy="980" r="640" fill="url(#glowOrange)"/>
+  <circle cx="1520" cy="140" r="480" fill="url(#glowViolet)"/>
+
+  <!-- ===== left: three cache buckets ===== -->
+  <g>
+    <!-- group bracket -->
+    <path d="M138 268 h-0 v500 h0" stroke="#3D5378" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <path d="M138 268 h24 M138 768 h24" stroke="#3D5378" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- bucket 1: stable -->
+    <g>
+      <rect x="170" y="268" width="800" height="132" rx="26" fill="#0D1626" stroke="#24344E" stroke-width="2.5"/>
+      <rect x="170" y="268" width="14" height="132" fill="#2DD4BF"/>
+      <rect x="210" y="302" width="380" height="18" rx="9" fill="#3D5378"/>
+      <rect x="210" y="342" width="280" height="18" rx="9" fill="#31517B"/>
+      <circle cx="908" cy="334" r="34" fill="#2DD4BF" opacity="0.16"/>
+      <path d="M914 300 l-26 38 h18 l-10 30 28 -40 h-18 z" fill="#5EEAD4"/>
+    </g>
+
+    <!-- bucket 2: stable -->
+    <g>
+      <rect x="170" y="452" width="800" height="132" rx="26" fill="#0D1626" stroke="#24344E" stroke-width="2.5"/>
+      <rect x="170" y="452" width="14" height="132" fill="#2DD4BF"/>
+      <rect x="210" y="486" width="440" height="18" rx="9" fill="#3D5378"/>
+      <rect x="210" y="526" width="240" height="18" rx="9" fill="#31517B"/>
+      <circle cx="908" cy="518" r="34" fill="#2DD4BF" opacity="0.16"/>
+      <path d="M914 484 l-26 38 h18 l-10 30 28 -40 h-18 z" fill="#5EEAD4"/>
+    </g>
+
+    <!-- bucket 3: dynamic -->
+    <g>
+      <rect x="170" y="636" width="800" height="132" rx="26" fill="#0D1626" stroke="#24344E" stroke-width="2.5"/>
+      <rect x="170" y="636" width="14" height="132" fill="#FB923C"/>
+      <rect x="210" y="670" width="330" height="18" rx="9" fill="#3D5378"/>
+      <rect x="210" y="710" width="400" height="18" rx="9" fill="#31517B"/>
+      <circle cx="908" cy="702" r="34" fill="#FB923C" opacity="0.18"/>
+      <path d="M914 668 l-26 38 h18 l-10 30 28 -40 h-18 z" fill="#FBBF24"/>
+    </g>
+
+    <!-- flow to nested prefixes -->
+    <path d="M1020 518 C 1080 518 1100 518 1150 518" stroke="url(#flow)" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 20" fill="none"/>
+    <path d="M1156 504 l30 14 -30 14 z" fill="#60A5FA"/>
+  </g>
+
+  <!-- ===== right: nested prefix cache ===== -->
+  <g>
+    <!-- outer prefix -->
+    <rect x="1230" y="248" width="700" height="540" rx="40" fill="none" stroke="#3D5378" stroke-width="3.5"/>
+    <!-- mid prefix -->
+    <rect x="1290" y="300" width="580" height="436" rx="34" fill="none" stroke="#2DD4BF" stroke-width="3.5" opacity="0.45"/>
+    <!-- inner prefix -->
+    <rect x="1350" y="352" width="460" height="332" rx="28" fill="#0D1626" stroke="#2DD4BF" stroke-width="4.5"/>
+
+    <!-- cache hit core -->
+    <circle cx="1580" cy="518" r="110" fill="url(#glowAmber)"/>
+    <path d="M1592 448 l-54 78 h38 l-22 62 58 -82 h-38 z" fill="#FBBF24"/>
+
+    <!-- breakpoints on each prefix edge -->
+    <path d="M1930 502 l16 16 -16 16 -16 -16 z" fill="#FBBF24" opacity="0.55"/>
+    <path d="M1870 502 l16 16 -16 16 -16 -16 z" fill="#FBBF24" opacity="0.75"/>
+    <path d="M1810 502 l16 16 -16 16 -16 -16 z" fill="#FBBF24" opacity="0.95"/>
+  </g>
+
+  <!-- sparkles -->
+  <g fill="#5EEAD4">
+    <path d="M1130 150 l7 20 20 7 -20 7 -7 20 -7 -20 -20 -7 20 -7 z" opacity="0.9"/>
+    <path d="M1986 806 l5 15 15 5 -15 5 -5 15 -5 -15 -15 -5 15 -5 z" opacity="0.6"/>
+  </g>
+  <g fill="#FDBA74">
+    <path d="M1122 900 l6 17 17 6 -17 6 -6 17 -6 -17 -17 -6 17 -6 z" opacity="0.7"/>
+    <path d="M1252 1068 l5 14 14 5 -14 5 -5 14 -5 -14 -14 -5 14 -5 z" opacity="0.5"/>
+    <path d="M90 150 l6 18 18 6 -18 6 -6 18 -6 -18 -18 -6 18 -6 z" opacity="0.6"/>
+  </g>
+</svg>

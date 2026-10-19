@@ -1,0 +1,21 @@
+{{/* 连载系列卡片：按系列最新文章排序，封面取系列内最近一篇带封面的文章 */}}
+{{ $latests := slice }}
+{{ range site.Taxonomies.series }}
+  {{ with index (.Pages.ByDate.Reverse) 0 }}{{ $latests = $latests | append . }}{{ end }}
+{{ end }}
+<div class="series-grid">
+  {{ range $i, $latest := first 6 (sort $latests "Date" "desc") }}
+  {{ $term := "" }}{{ with .GetTerms "series" }}{{ $term = index . 0 }}{{ end }}
+  {{ $cover := partial "cover-of.html" . }}
+  <a class="series-card" href="{{ $term.Page.RelPermalink }}">
+    <div class="cover{{ if not $cover }} noimg{{ end }}"{{ with $cover }} style="background-image:url('{{ . }}')"{{ end }}>
+      <span class="no">SER.{{ printf "%02d" (add $i 1) }}</span>
+    </div>
+    <div class="body">
+      <h4>{{ $term.Page.Title }}</h4>
+      <p>{{ len $term.Pages }} 篇连载 · 最新：{{ $latest.Title }}</p>
+      <span class="count"><b>{{ len $term.Pages }}</b> 篇 · 更新于 {{ $latest.Date.Format "2006-01" }}</span>
+    </div>
+  </a>
+  {{ end }}
+</div>

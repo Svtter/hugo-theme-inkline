@@ -1,0 +1,95 @@
+baseURL = "http://localhost:1313/"
+title = "Svtter's Blog"
+theme = "hugo-theme-inkline"
+
+defaultContentLanguage = "zh-cn"
+hasCJKLanguage = true
+
+[pagination]
+pagerSize = 10
+
+[taxonomies]
+series = "series"
+tag = "tags"
+category = "categories"
+
+[permalinks]
+post = "/p/:slug/"
+page = "/:slug/"
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[markup]
+  [markup.highlight]
+    noClasses = true
+    style = "monokai"
+    lineNos = false
+
+[related]
+includeNewer = true
+toLower = false
+threshold = 60
+  [[related.indices]]
+  name = "tags"
+  weight = 80
+  [[related.indices]]
+  name = "categories"
+  weight = 40
+
+[menus]
+  [[menus.main]]
+  name = "文章"
+  url = "/post/"
+  weight = 1
+  [[menus.main]]
+  name = "系列"
+  url = "/series/"
+  weight = 2
+  [[menus.main]]
+  name = "分类"
+  url = "/categories/"
+  weight = 3
+  [[menus.main]]
+  name = "归档"
+  url = "/archives/"
+  weight = 4
+  [[menus.main]]
+  name = "模型"
+  url = "/ai/"
+  weight = 5
+  [[menus.main]]
+  name = "链接"
+  url = "/links/"
+  weight = 6
+  [[menus.main]]
+  name = "咨询"
+  url = "/services/"
+  weight = 7
+  [[menus.main]]
+  name = "关于"
+  url = "/about/"
+  weight = 8
+
+[params]
+description = "专注于编程技术、机器学习和开发工具。分享实践经验，探索技术的本质，记录学习的旅程。"
+motto = "在你想要放弃的时候，想想你为什么开始"
+bio = "专注于编程技术、机器学习和开发工具。分享实践经验，探索技术的本质，记录学习的旅程。"
+avatar = "https://github.com/Svtter.png"
+name = "Svtter"
+handle = "@svtter · svtter.cn"
+since = 2014
+license = "CC BY-NC-SA 4.0"
+topics = ["编程", "机器学习", "开发工具", "Agent 工程", "技术写作", "自托管"]
+
+[params.newsletter]
+label = "订阅以获取最新文章更新，第一时间送达你的邮箱"
+action = ""
+
+[params.social]
+github = "https://github.com/svtter"
+
+[params.utterances]
+repo = "Svtter/svtter.github.io"
+label = "blog"
+mapping = "title"

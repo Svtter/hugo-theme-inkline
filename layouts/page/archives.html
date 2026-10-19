@@ -1,0 +1,37 @@
+{{ define "main" }}
+{{/* 归档页：frontmatter layout: archives */}}
+{{ $host := (urls.Parse site.BaseURL).Hostname }}
+{{ $groups := (where site.RegularPages "Section" "in" site.MainSections).GroupByDate "2006" "asc" }}
+<section class="hero hero-slim">
+  <div class="wrap">
+    <div class="kicker">// ARCHIVES <span class="dim">— ~/{{ $host }}/archives</span></div>
+    <h1>归档</h1>
+    <div class="hero-stats">
+      <span class="stat"><b>{{ len (where site.RegularPages "Section" "in" site.MainSections) }}</b> 篇文章 · <b>{{ len $groups }}</b> 个年份</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap layout">
+  <div class="feed">
+    {{ range $groups }}
+    <div class="section-head">
+      <span class="no">{{ .Key }}</span>
+      <h2>{{ .Len }} 篇</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="post-list">
+      {{ range .Pages.ByDate.Reverse }}
+      <a class="post-item" href="{{ .RelPermalink }}">
+        <span class="date">{{ .Date.Format "01-02" }}</span>
+        <span class="title">{{ .Title }}</span>
+        <span class="aside">{{ with first 1 (.GetTerms "categories") }}<span class="cat">{{ (index . 0).Page.Title }}</span>{{ end }}<span class="sep">·</span>{{ .ReadingTime }} min</span>
+      </a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+  {{ partial "sidebar.html" . }}
+</div>
+
+{{ end }}

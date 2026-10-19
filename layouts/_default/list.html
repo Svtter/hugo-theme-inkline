@@ -1,0 +1,59 @@
+{{ define "main" }}
+{{ $host := (urls.Parse site.BaseURL).Hostname }}
+{{ $isTerm := eq .Kind "term" }}
+{{ $isSeries := and $isTerm (eq .Data.Singular "series") }}
+
+<section class="hero hero-slim">
+  <div class="wrap">
+    <div class="kicker">// {{ if $isTerm }}TERM{{ else }}SECTION{{ end }} <span class="dim">— ~/{{ $host }}{{ .RelPermalink }}</span></div>
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="sub">{{ . }}</p>{{ end }}
+    <div class="hero-stats">
+      <span class="stat"><b>{{ .Pages.Len }}</b> 篇文章</span>
+      {{ if $isSeries }}<span class="stat"><span class="dot">·</span> 连载系列</span>{{ end }}
+    </div>
+  </div>
+</section>
+
+<div class="wrap layout">
+  <div class="feed">
+    {{ $paged := .Paginate .Pages }}
+
+    {{ if $isSeries }}
+    {{ $eps := .Pages.ByWeight }}
+    <div class="section-head">
+      <span class="no">§ 01</span>
+      <h2>系列目录</h2>
+      <span class="rule"></span>
+      <span class="more">{{ len $eps }} 篇</span>
+    </div>
+    <div class="episodes">
+      {{ range $i, $e := $eps }}
+      <a href="{{ $e.RelPermalink }}">
+        <span class="no">{{ printf "%02d" (add $i 1) }}</span><span class="t">{{ replace $e.Title ".md" "" }}</span>
+      </a>
+      {{ end }}
+    </div>
+    {{ end }}
+
+    <div class="section-head">
+      <span class="no">§ {{ if $isSeries }}02{{ else }}01{{ end }}</span>
+      <h2>全部文章</h2>
+      <span class="rule"></span>
+      <span class="more">第 {{ $paged.PageNumber }} / {{ $paged.TotalPages }} 页</span>
+    </div>
+    <div class="post-list">
+      {{ range $paged.Pages }}
+      <a class="post-item" href="{{ .RelPermalink }}">
+        <span class="date">{{ .Date.Format "06-01-02" }}</span>
+        <span class="title">{{ .Title }}</span>
+        <span class="aside">{{ with first 1 (.GetTerms "categories") }}<span class="cat">{{ (index . 0).Page.Title }}</span>{{ end }}<span class="sep">·</span>{{ .ReadingTime }} min</span>
+      </a>
+      {{ end }}
+    </div>
+    {{ partial "pagination.html" $paged }}
+  </div>
+  {{ partial "sidebar.html" . }}
+</div>
+
+{{ end }}

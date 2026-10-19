@@ -1,0 +1,31 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+{{ with .Description | default .Summary | default site.Params.description }}
+<meta name="description" content="{{ . }}">
+{{ end }}
+{{ with .Params.cover | default .Params.image }}
+{{ if not (reflect.IsMap .) }}<meta property="og:image" content="{{ . }}">{{ end }}
+{{ end }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+{{ with site.Home.OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">
+{{ end }}
+{{ with resources.Get "css/main.css" }}
+{{ with . | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{ end }}
+{{ end }}
+{{/* 主题与字号预置，避免闪切（正式逻辑在 main.js） */}}
+<script>
+(function () {
+  var t = localStorage.getItem('inkline-theme');
+  if (t) document.documentElement.dataset.theme = t;
+  else if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
+  var f = localStorage.getItem('inkline-fontsize');
+  if (f) document.documentElement.dataset.fontsize = f;
+})();
+</script>

@@ -1,0 +1,21 @@
+{{/* 归档年度柱状图：按年分组，峰值年高亮 */}}
+{{ $groups := (where site.RegularPages "Section" "in" site.MainSections).GroupByDate "2006" "asc" }}
+{{ $max := 0 }}
+{{ range $groups }}{{ if gt .Len $max }}{{ $max = .Len }}{{ end }}{{ end }}
+{{ $asc := slice }}
+{{ range $groups }}{{ $asc = $asc | append . }}{{ end }}
+{{ $asc = sort $asc "Key" }}
+<div class="card">
+  <div class="card-label"><span class="hash">#</span> 时间归档 · {{ with index $asc 0 }}{{ .Key }}{{ end }} → {{ with index (last 1 $asc) 0 }}{{ .Key }}{{ end }}</div>
+  <div class="archive-bars">
+    {{ range $asc }}
+    <div class="bar-col{{ if ge .Len (div (mul $max 50) 100) }} hot{{ end }}" title="{{ .Key }} · {{ .Len }} 篇">
+      <div class="bar" style="height: {{ div (mul .Len 100) $max }}%"></div>
+    </div>
+    {{ end }}
+  </div>
+  <div class="archive-years">
+    {{ range $asc }}<span>{{ strings.TrimPrefix "20" .Key }}</span>{{ end }}
+  </div>
+  <div class="archive-note">{{ len $asc }} 年 <b>{{ len (where site.RegularPages "Section" "in" site.MainSections) }}</b> 篇 · 峰值 <b>{{ $max }}</b> 篇</div>
+</div>
