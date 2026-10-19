@@ -5,9 +5,9 @@
 <section class="hero hero-slim">
   <div class="wrap">
     <div class="kicker">// ARCHIVES <span class="dim">— ~/{{ $host }}/archives</span></div>
-    <h1>归档</h1>
+    <h1>{{ i18n "archive_title" }}</h1>
     <div class="hero-stats">
-      <span class="stat"><b>{{ len (where site.RegularPages "Section" "in" site.MainSections) }}</b> 篇文章 · <b>{{ len $groups }}</b> 个年份</span>
+      <span class="stat"><b>{{ len (where site.RegularPages "Section" "in" site.MainSections) }}</b> {{ i18n "stats_posts" }} · <b>{{ len $groups }}</b> {{ i18n "years_unit" }}</span>
     </div>
   </div>
 </section>
@@ -17,7 +17,7 @@
     {{ range $groups }}
     <div class="section-head">
       <span class="no">{{ .Key }}</span>
-      <h2>{{ .Len }} 篇</h2>
+      <h2>{{ .Len }} {{ i18n "posts_unit" }}</h2>
       <span class="rule"></span>
     </div>
     <div class="post-list">

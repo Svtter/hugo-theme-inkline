@@ -9,7 +9,7 @@
     <h1>{{ .Title }}</h1>
     {{ with .Description }}<p class="sub">{{ . }}</p>{{ end }}
     <div class="hero-stats">
-      <span class="stat"><b>{{ .Pages.Len }}</b> 篇文章</span>
+      <span class="stat"><b>{{ .Pages.Len }}</b> {{ i18n "stats_posts" }}</span>
       {{ if $isSeries }}<span class="stat"><span class="dot">·</span> 连载系列</span>{{ end }}
     </div>
   </div>
@@ -23,7 +23,7 @@
     {{ $eps := .Pages.ByWeight }}
     <div class="section-head">
       <span class="no">§ 01</span>
-      <h2>系列目录</h2>
+      <h2>{{ i18n "series_episodes" }}</h2>
       <span class="rule"></span>
       <span class="more">{{ len $eps }} 篇</span>
     </div>
@@ -38,9 +38,9 @@
 
     <div class="section-head">
       <span class="no">§ {{ if $isSeries }}02{{ else }}01{{ end }}</span>
-      <h2>全部文章</h2>
+      <h2>{{ i18n "all_posts" }}</h2>
       <span class="rule"></span>
-      <span class="more">第 {{ $paged.PageNumber }} / {{ $paged.TotalPages }} 页</span>
+      <span class="more">{{ i18n "page_of" (dict "a" $paged.PageNumber "b" $paged.TotalPages) }}</span>
     </div>
     <div class="post-list">
       {{ range $paged.Pages }}

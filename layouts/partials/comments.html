@@ -1,6 +1,6 @@
 {{ with site.Params.utterances.repo }}
 <div class="comments">
-  <div class="comments-head">评论 · 由 utterances 驱动，基于 GitHub Issues（{{ . }}）</div>
+  <div class="comments-head">{{ i18n "comments_head" (dict "repo" .) }}</div>
   <script src="https://utteranc.es/client.js"
     repo="{{ . }}"
     issue-term="{{ site.Params.utterances.mapping | default "title" }}"

@@ -1,0 +1,25 @@
+{{/*
+  GitHub Repository Card Shortcode
+
+  Usage:
+  {{< repo-card repo="owner/repository" >}}
+
+  Example:
+  {{< repo-card repo="svtter/filecompress" >}}
+*/}}
+
+{{ $repo := .Get "repo" }}
+
+{{- if not $repo -}}
+  {{- errorf "repo-card shortcode requires 'repo' parameter (e.g., repo=\"owner/repository\")" -}}
+{{- end -}}
+
+{{- if not (.Page.Scratch.Get "repo-card-script-loaded") -}}
+  {{- $js := resources.Get "js/repo-card.js" -}}
+  {{- if $js -}}
+  <script src="{{ $js.RelPermalink }}"></script>
+  {{- end -}}
+  {{- .Page.Scratch.Set "repo-card-script-loaded" true -}}
+{{- end -}}
+
+<div class="repo-card" data-repo="{{ $repo }}"></div>

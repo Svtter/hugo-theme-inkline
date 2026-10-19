@@ -6,7 +6,7 @@
     <div class="kicker">// {{ .Data.Singular | upper }} INDEX <span class="dim">— ~/{{ $host }}{{ .RelPermalink }}</span></div>
     <h1>{{ .Title }}</h1>
     <div class="hero-stats">
-      <span class="stat"><b>{{ len .Data.Terms }}</b> 个{{ .Data.Singular }}</span>
+      <span class="stat"><b>{{ len .Data.Terms }}</b> · {{ .Data.Singular }}</span>
     </div>
   </div>
 </section>

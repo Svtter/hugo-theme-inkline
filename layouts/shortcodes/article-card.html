@@ -1,0 +1,88 @@
+{{/*
+  Article Card Shortcode
+
+  Usage:
+  {{< article-card
+    image="/images/article.jpg"
+    title="Article Title"
+    description="Article description text..."
+    category1="News"
+    category2="Artificial Intelligence"
+    readTime="3 min read"
+    author="Josh Quittner"
+    date="Nov 4, 2025"
+    link="https://example.com/article"
+  >}}
+*/}}
+
+{{ $image := .Get "image" }}
+{{ $title := .Get "title" }}
+{{ $description := .Get "description" }}
+{{ $category1 := .Get "category1" }}
+{{ $category2 := .Get "category2" }}
+{{ $readTime := .Get "readTime" }}
+{{ $author := .Get "author" }}
+{{ $date := .Get "date" }}
+{{ $link := .Get "link" }}
+
+<div class="article-card">
+  {{ if $link }}
+  <a href="{{ $link }}" class="article-card-link" {{ if hasPrefix $link "http" }}target="_blank" rel="noopener noreferrer"{{ end }}>
+  {{ end }}
+    <div class="article-card-inner">
+      {{ if $image }}
+      <div class="article-card-image">
+        <img src="{{ $image }}" alt="{{ $title }}" loading="lazy">
+      </div>
+      {{ end }}
+
+      <div class="article-card-content">
+        <h3 class="article-card-title">{{ $title }}</h3>
+
+        {{ if $description }}
+        <p class="article-card-description">{{ $description }}</p>
+        {{ end }}
+
+        <div class="article-card-meta">
+          <div class="article-card-meta-top">
+            {{ if or $category1 $category2 }}
+            <span class="article-card-categories">
+              {{ if $category1 }}{{ $category1 }}{{ end }}
+              {{ if and $category1 $category2 }} • {{ end }}
+              {{ if $category2 }}{{ $category2 }}{{ end }}
+            </span>
+            {{ end }}
+
+            {{ if $readTime }}
+            <span class="article-card-read-time">
+              <svg class="article-card-clock-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M10 6V10L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              {{ $readTime }}
+            </span>
+            {{ end }}
+          </div>
+
+          <div class="article-card-meta-bottom">
+            {{ if or $author $date }}
+            <span class="article-card-author-date">
+              {{ if $author }}{{ $author }}{{ end }}
+              {{ if and $author $date }} • {{ end }}
+              {{ if $date }}{{ $date }}{{ end }}
+            </span>
+            {{ end }}
+
+            <button class="article-card-bookmark" aria-label="Bookmark article">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 3C5 2.44772 5.44772 2 6 2H14C14.5523 2 15 2.44772 15 3V18L10 15L5 18V3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{ if $link }}
+  </a>
+  {{ end }}
+</div>

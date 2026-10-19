@@ -1,7 +1,7 @@
 {{/* 分页条：传入 .Paginator 上下文 */}}
 {{ if gt .TotalPages 1 }}
 <nav class="pagination">
-  {{ if .HasPrev }}<a class="page prev" href="{{ .Prev.URL }}">← 上一页</a>{{ end }}
+  {{ if .HasPrev }}<a class="page prev" href="{{ .Prev.URL }}">{{ i18n "page_prev" }}</a>{{ end }}
   {{ range .Pagers }}
   {{ $n := .PageNumber }}
   {{ if eq $n 1 }}<span class="page{{ if eq $n $.PageNumber }} current{{ end }}"><a href="{{ .URL }}">1</a></span>
@@ -11,6 +11,6 @@
   <span class="page gap">…</span>
   {{ end }}
   {{ end }}
-  {{ if .HasNext }}<a class="page next" href="{{ .Next.URL }}">下一页 →</a>{{ end }}
+  {{ if .HasNext }}<a class="page next" href="{{ .Next.URL }}">{{ i18n "page_next" }}</a>{{ end }}
 </nav>
 {{ end }}

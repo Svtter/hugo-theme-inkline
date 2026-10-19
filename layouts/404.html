@@ -2,10 +2,10 @@
 <section class="hero hero-slim">
   <div class="wrap">
     <div class="kicker">// 404 <span class="dim">— NOT FOUND</span></div>
-    <h1>这个页面不存在</h1>
-    <p class="sub">链接可能已经失效，或者文章被移动到了别处。</p>
+    <h1>{{ i18n "notfound_title" }}</h1>
+    <p class="sub">{{ i18n "notfound_body" }}</p>
     <div class="hero-stats">
-      <span class="stat"><a class="btn" href="{{ site.Home.RelPermalink }}">← 返回首页</a></span>
+      <span class="stat"><a class="btn" href="{{ site.Home.RelPermalink }}">{{ i18n "back_home" }}</a></span>
     </div>
   </div>
 </section>

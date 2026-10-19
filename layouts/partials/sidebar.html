@@ -28,7 +28,7 @@
   {{ partial "archive-bars.html" . }}
 
   <div class="card">
-    <div class="card-label"><span class="hash">#</span> 分类</div>
+    <div class="card-label"><span class="hash">#</span> {{ i18n "categories" }}</div>
     {{ range site.Taxonomies.categories.ByCount }}
     <a class="toc-row" href="{{ .Page.RelPermalink }}">
       <span class="name">{{ .Page.Title }}</span><span class="leader"></span><span class="count">{{ .Count }}</span>
@@ -37,7 +37,7 @@
   </div>
 
   <div class="card">
-    <div class="card-label"><span class="hash">#</span> 标签云</div>
+    <div class="card-label"><span class="hash">#</span> {{ i18n "tag_cloud" }}</div>
     <div class="tagcloud">
       {{ $tags := site.Taxonomies.tags.ByCount }}
       {{ range first 18 $tags }}
@@ -47,8 +47,8 @@
   </div>
 
   <div class="card subscribe">
-    <div class="card-label"><span class="hash">#</span> 订阅</div>
-    <p>全文 RSS 输出最近 20 篇；也支持邮件订阅新文章通知。</p>
+    <div class="card-label"><span class="hash">#</span> {{ i18n "subscribe" }}</div>
+    <p>{{ i18n "subscribe_desc" }}</p>
     <div class="btns">
       {{ with site.Home.OutputFormats.Get "rss" }}<a class="btn" href="{{ .Permalink }}">/index.xml</a>{{ end }}
       <a class="btn primary" href="#q">邮件订阅</a>

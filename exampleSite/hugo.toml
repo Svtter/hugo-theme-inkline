@@ -5,6 +5,13 @@ theme = "hugo-theme-inkline"
 defaultContentLanguage = "zh-cn"
 hasCJKLanguage = true
 
+[languages]
+  [languages.zh-cn]
+  weight = 1
+  [languages.en]
+  weight = 2
+  title = "Svtter's Blog"
+
 [pagination]
 pagerSize = 10
 

@@ -20,14 +20,14 @@
     {{ $t := index . 0 }}
     {{ $eps := $t.Pages.ByWeight }}
     {{ $pos := 0 }}{{ range $i, $e := $eps }}{{ if eq $e.Permalink $.Permalink }}{{ $pos = add $i 1 }}{{ end }}{{ end }}
-    <a class="series" href="{{ $t.Page.RelPermalink }}">系列 · {{ $t.Page.Title }} {{ $pos }}/{{ len $eps }}</a>
+    <a class="series" href="{{ $t.Page.RelPermalink }}">{{ i18n "series_badge" (dict "name" $t.Page.Title "pos" $pos "total" (len $eps)) }}</a>
     <span class="sep">/</span>
     {{ end }}
     {{ range .GetTerms "categories" }}<span class="cat">{{ .Page.Title }}</span>{{ end }}
     <span class="sep">/</span>
     <span>{{ .Date.Format "2006-01-02 15:04" }}</span>
     <span class="sep">/</span>
-    <span>约 {{ .WordCount }} 字 · {{ .ReadingTime }} min</span>
+    <span>{{ i18n "word_count" (dict "n" .WordCount) }} · {{ .ReadingTime }} min</span>
   </div>
 
   <h1>{{ .Title }}</h1>
@@ -48,13 +48,13 @@
   <article class="prose">
     {{ .Content }}
     <div class="footnote">
-      {{ with .Params.src }}来源：{{ . }} · {{ end }}
-      发布于 {{ .Date.Format "2006-01-02" }}{{ with .Lastmod }}{{ if not (.Equal $.Date) }} · 更新于 {{ .Format "2006-01-02" }}{{ end }}{{ end }}
+      {{ with .Params.src }}{{ i18n "src_label" }}：{{ . }} · {{ end }}
+      {{ i18n "published_at" }} {{ .Date.Format "2006-01-02" }}{{ with .Lastmod }}{{ if not (.Equal $.Date) }} · {{ i18n "updated_at" }} {{ .Format "2006-01-02" }}{{ end }}{{ end }}
     </div>
   </article>
 
   <aside class="toc">
-    <div class="toc-label"><span class="hash">#</span> 目录 · TOC</div>
+    <div class="toc-label"><span class="hash">#</span> {{ i18n "toc" }} · TOC</div>
     <nav id="toc-nav">
       {{ .Fragments.ToHTML 2 3 false }}
     </nav>

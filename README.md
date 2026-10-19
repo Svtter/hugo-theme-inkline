@@ -66,3 +66,12 @@ assets/css/main.css   全部样式（rem 化，根字号驱动三档缩放）
 assets/js/main.js     主题切换、字号、搜索、TOC scrollspy
 exampleSite/      示例站点（真实文章数据）
 ```
+
+## 多语言
+
+- 界面文案：`i18n/zh-cn.toml` + `i18n/en.toml`，按站点语言自动切换（占位/统计/系列/评论等全部走 i18n）
+- 语言在站点 `languages` 配置中定义即可；菜单建议按语言分别配置
+
+## Shortcodes
+
+`article-card`、`repo-card`（GitHub API 实时拉取，跟随主题深浅色）、`social-card`、`wechat-card`、`pdf` 均已内置，与旧博客用法一致。

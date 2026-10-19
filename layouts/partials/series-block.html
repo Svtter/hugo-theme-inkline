@@ -15,11 +15,11 @@
 
   <div class="license-row">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>
-    <span>Licensed under {{ site.Params.license | default "CC BY-NC-SA 4.0" }} · 转载请署名并保持相同许可</span>
+    <span>{{ i18n "license_line" (dict "lic" (site.Params.license | default "CC BY-NC-SA 4.0")) }}</span>
   </div>
 
   {{ if $term }}
-  <div class="series-nav-label"><b>SERIES</b><span>{{ $term.Page.Title }} · {{ $epTotal }} 篇中的第 {{ $pos }} 篇</span></div>
+  <div class="series-nav-label"><b>SERIES</b><span>{{ i18n "series_head" (dict "name" $term.Page.Title "pos" $pos "total" $epTotal) }}</span></div>
   <div class="episodes">
     {{ range $i, $e := $episodes }}
     <a href="{{ $e.RelPermalink }}"{{ if eq $e.Permalink $.Permalink }} class="current"{{ end }}>
@@ -41,7 +41,7 @@
       <span class="t">{{ .Title }}</span>
     </a>
     {{ else }}
-    <a class="empty"><span class="dir">← PREV</span><span class="t">已是本系列第一篇</span></a>
+    <a class="empty"><span class="dir">← PREV</span><span class="t">{{ i18n "first_in_series" }}</span></a>
     {{ end }}
     {{ with $next }}
     <a class="next" href="{{ .RelPermalink }}">
@@ -49,7 +49,7 @@
       <span class="t">{{ .Title }}</span>
     </a>
     {{ else }}
-    <a class="next empty"><span class="dir">NEXT →</span><span class="t">已是本系列最新一篇</span></a>
+    <a class="next empty"><span class="dir">NEXT →</span><span class="t">{{ i18n "latest_in_series" }}</span></a>
     {{ end }}
   </div>
   {{ end }}
@@ -61,7 +61,7 @@
     {{ end }}
   {{ end }}
   {{ if gt (len $rel) 0 }}
-  <div class="related-label"><b>RELATED</b><span>相关文章</span></div>
+  <div class="related-label"><b>RELATED</b><span>{{ i18n "related" }}</span></div>
   <div class="related">
     {{ range first 4 $rel }}
     {{ $cover := partial "cover-of.html" . }}

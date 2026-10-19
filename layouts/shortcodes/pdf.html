@@ -1,0 +1,11 @@
+{{- $src := .Get "src" -}}
+{{- $height := default "80vh" (.Get "height") -}}
+{{- $page := .Get "page" -}}
+{{- $view := default "FitH" (.Get "view") -}}
+
+{{- $url := $src -}}
+{{- if $page -}}
+  {{- $url = printf "%s#page=%s&view=%s" $src $page $view -}}
+{{- end -}}
+
+<iframe src="{{ $url }}" class="pdf-embed" style="width:100%; height:{{ $height }}; border:0; display:block;"></iframe>

@@ -27,7 +27,7 @@
         <p>{{ .Description | default .Summary | plainify }}</p>
         <div class="foot">
           <span>{{ .Date.Format "2006-01-02" }} · {{ .ReadingTime }} min</span>
-          <span class="read">阅读全文 →</span>
+          <span class="read">{{ i18n "read_more" }}</span>
         </div>
       </div>
     </a>
@@ -35,9 +35,9 @@
 
     <div class="section-head">
       <span class="no">§ 01</span>
-      <h2>最新文章</h2>
+      <h2>{{ i18n "latest_posts" }}</h2>
       <span class="rule"></span>
-      <a class="more" href="/post/">全部 {{ len $posts }} 篇 →</a>
+      <a class="more" href="/post/">{{ i18n "all_posts_n" (dict "n" (len $posts)) }} →</a>
     </div>
 
     <div class="post-list">
@@ -56,9 +56,9 @@
 
     <div class="section-head">
       <span class="no">§ 02</span>
-      <h2>连载系列</h2>
+      <h2>{{ i18n "series_section" }}</h2>
       <span class="rule"></span>
-      <a class="more" href="/series/">全部 {{ site.Taxonomies.series.Len }} 个系列 →</a>
+      <a class="more" href="/series/">{{ i18n "all_series_n" (dict "n" (len site.Taxonomies.series)) }} →</a>
     </div>
     {{ partial "series-grid.html" . }}
   </div>

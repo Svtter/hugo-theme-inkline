@@ -4,23 +4,24 @@
 {{ $postCount := len (where site.RegularPages "Section" "in" site.MainSections) }}
 {{ $years := (where site.RegularPages "Section" "in" site.MainSections).GroupByDate "2006" "asc" }}
 {{ $minYear := "" }}{{ range $years }}{{ if or (not $minYear) (lt .Key $minYear) }}{{ $minYear = .Key }}{{ end }}{{ end }}
+{{ if or (not $minYear) (lt (int $minYear) 2000) }}{{ $minYear = string now.Year }}{{ end }}
 <section class="hero">
   <div class="wrap">
-    <div class="kicker">// {{ site.Title | upper }} <span class="dim">— EST. {{ $minYear }} · AGENT 工程师 / 软件工程师 / 技术写作者</span></div>
-    <h1>{{ site.Params.motto | default "记录，然后理解。" }}</h1>
+    <div class="kicker">// {{ site.Title | upper }} <span class="dim">— EST. {{ $minYear }} · {{ i18n "roles" }}</span></div>
+    <h1>{{ site.Params.motto | default (i18n "default_motto") }}</h1>
     <p class="sub">{{ site.Params.description }}</p>
 
     <div class="hero-stats">
-      <span class="stat"><b>{{ $postCount }}</b> 篇文章</span>
-      <span class="stat"><span class="dot">·</span> <b>{{ sub now.Year (int $minYear) }}</b> 年持续写作</span>
-      <span class="stat"><span class="dot">·</span> <b>{{ $seriesCount }}</b> 个连载系列</span>
-      <span class="stat"><span class="dot">·</span> <b>{{ site.Params.license | default "CC BY-NC-SA" }}</b> 授权</span>
+      <span class="stat"><b>{{ $postCount }}</b> {{ i18n "stats_posts" }}</span>
+      <span class="stat"><span class="dot">·</span> <b>{{ sub now.Year (int $minYear) }}</b> {{ i18n "stats_years" }}</span>
+      <span class="stat"><span class="dot">·</span> <b>{{ $seriesCount }}</b> {{ i18n "stats_series" }}</span>
+      <span class="stat"><span class="dot">·</span> <b>{{ site.Params.license | default "CC BY-NC-SA" }}</b> {{ i18n "stats_license" }}</span>
     </div>
 
     <div class="cmdzone">
       <label class="cmdline" for="q">
         <span class="prompt">&gt;_</span>
-        <input id="q" type="search" placeholder="搜索文章…" autocomplete="off">
+        <input id="q" type="search" placeholder="{{ i18n "search_placeholder" }}" autocomplete="off">
         <kbd>/</kbd>
       </label>
       <div class="search-results" id="search-results" hidden></div>
@@ -31,10 +32,10 @@
     </div>
 
     <div class="newsletter">
-      <span class="nl-label">{{ site.Params.newsletter.label | default "订阅以获取最新文章更新，第一时间送达你的邮箱" }}</span>
+      <span class="nl-label">{{ site.Params.newsletter.label | default (i18n "newsletter_label") }}</span>
       <form class="nl-form" action="{{ site.Params.newsletter.action | default "#" }}">
         <input type="email" placeholder="输入您的邮箱地址" required>
-        <button class="nl-btn" type="submit">订阅</button>
+        <button class="nl-btn" type="submit">{{ i18n "subscribe" }}</button>
       </form>
     </div>
   </div>
