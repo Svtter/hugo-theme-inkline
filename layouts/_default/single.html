@@ -2,6 +2,7 @@
 {{ $host := (urls.Parse site.BaseURL).Hostname }}
 {{ $cover := partial "cover-of.html" . }}
 {{ $seriesTerms := .GetTerms "series" }}
+<div class="wrap">
 
 <header class="article-head">
   <div class="breadcrumb">
@@ -61,5 +62,5 @@
 </div>
 
 {{ partial "series-block.html" . }}
-
+</div>
 {{ end }}
