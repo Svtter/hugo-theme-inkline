@@ -25,6 +25,9 @@ home = ["HTML", "RSS", "JSON"]
     noClasses = true
     style = "monokai"
     lineNos = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true   # 文章内嵌 raw HTML（如 SVG 图表）
 
 [related]
 includeNewer = true
