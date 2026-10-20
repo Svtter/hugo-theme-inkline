@@ -96,6 +96,14 @@ topics = ["编程", "机器学习", "开发工具", "Agent 工程", "技术写�
 label = "订阅以获取最新文章更新，第一时间送达你的邮箱"
 action = ""
 
+[params.github_calendar]
+enable = true
+username = "svtter"
+
+# [params.carbon]
+# serve = "你的 Carbon serve ID"
+# placement = "你的 placement ID"
+
 [params.social]
 github = "https://github.com/svtter"
 

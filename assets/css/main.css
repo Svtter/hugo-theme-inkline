@@ -412,7 +412,7 @@ kbd {
 
 .post-item {
   display: grid;
-  grid-template-columns: 52px 44px minmax(0, 1fr) auto;
+  grid-template-columns: 64px 44px minmax(0, 1fr) auto;
   align-items: baseline;
   gap: 18px;
   padding: 17px 14px 17px 18px;
@@ -1389,3 +1389,63 @@ kbd {
   .article-card-image { width: 100%; height: 200px; }
   .article-card-content { padding: 1.25rem; }
 }
+
+/* ------------------------------------------------------------
+   GitHub 日历 / Carbon Ads
+   ------------------------------------------------------------ */
+.gh-calendar { overflow: hidden; }
+.gh-calendar .calendar { overflow-x: auto; font-family: var(--mono); }
+.gh-calendar .calendar text { font-family: var(--mono) !important; font-size: 7px !important; }
+.gh-calendar .calendar-graph text.wday { display: none; }
+
+.carbon-slot { margin-top: 4px; }
+#carbonads {
+  font-family: var(--sans);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  display: flow-root;
+}
+#carbonads span { display: block; }
+#carbonads .carbon-wrap { display: flex; flex-direction: column; gap: 8px; }
+#carbonads .carbon-img { display: block; }
+#carbonads .carbon-img img { width: 100%; max-width: 260px; border-radius: 6px; }
+#carbonads .carbon-text {
+  display: block;
+  font-size: .8125rem;
+  line-height: 1.6;
+  color: var(--ink);
+  text-decoration: none;
+}
+#carbonads .carbon-text:hover { color: var(--accent); }
+#carbonads .carbon-poweredby {
+  display: block;
+  font-family: var(--mono);
+  font-size: .625rem;
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-top: 6px;
+}
+
+/* GitHub 日历（自渲染热力图，朱砂色阶） */
+.gh-cal-summary { font-family: var(--mono); font-size: .75rem; color: var(--muted); margin-bottom: 8px; }
+.gh-cal-scroll { overflow-x: auto; padding-bottom: 4px; }
+.gh-cal-months {
+  display: grid; gap: 3px; min-width: max-content;
+  font-family: var(--mono); font-size: .5625rem; color: var(--faint);
+  margin-bottom: 2px; height: .75rem;
+}
+.gh-cal-grid { display: grid; grid-auto-flow: column; gap: 3px; min-width: max-content; }
+.gh-cal-col { display: grid; grid-auto-flow: row; gap: 3px; }
+.gh-cal-cell { width: 10px; height: 10px; border-radius: 2px; background: var(--surface-2); }
+.gh-cal-cell.l1 { background: color-mix(in srgb, var(--accent) 25%, var(--bg)); }
+.gh-cal-cell.l2 { background: color-mix(in srgb, var(--accent) 45%, var(--bg)); }
+.gh-cal-cell.l3 { background: color-mix(in srgb, var(--accent) 70%, var(--bg)); }
+.gh-cal-cell.l4 { background: var(--accent); }
+.gh-cal-legend {
+  display: flex; align-items: center; justify-content: flex-end; gap: 4px;
+  font-family: var(--mono); font-size: .625rem; color: var(--faint); margin-top: 8px;
+}
+.gh-cal-legend .gh-cal-cell { width: 9px; height: 9px; }

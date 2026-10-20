@@ -1,0 +1,15 @@
+{{/* GitHub 贡献日历：params.github_calendar.enable 且 username 非空时渲染（数据走 jogruber API，渲染在 main.js） */}}
+{{ $gc := site.Params.github_calendar }}
+{{ if and $gc (or $gc.enable $gc.username) }}
+{{ $user := $gc.username | default (strings.TrimPrefix "https://github.com/" site.Params.social.github) }}
+{{ if $user }}
+<div class="card gh-calendar">
+  <div class="card-label"><span class="hash">#</span> GitHub · {{ $user }}</div>
+  <div class="calendar" data-user="{{ $user }}"></div>
+</div>
+<script>
+  window.INKLINE = window.INKLINE || {};
+  window.INKLINE.ghCal = { user: {{ $user }}, summary: {{ i18n "cal_summary" }} };
+</script>
+{{ end }}
+{{ end }}

@@ -131,3 +131,78 @@
     spy();
   }
 })();
+
+/* ---------- GitHub 贡献日历（jogruber API → 主题色阶热力图） ---------- */
+document.querySelectorAll('.gh-calendar .calendar[data-user]').forEach((cal) => {
+  const user = cal.dataset.user;
+  const cfg = (window.INKLINE && window.INKLINE.ghCal) || {};
+  const esc = (s) => { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
+  fetch(`https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(user)}?y=last`)
+    .then((r) => r.json())
+    .then((data) => {
+      const days = data.contributions || [];
+      if (!days.length) { cal.textContent = '—'; return; }
+      const total = (data.total && data.total.lastYear) ||
+        days.reduce((a, d) => a + d.count, 0);
+
+      const cols = [];
+      let col = new Array(new Date(days[0].date + 'T00:00:00').getDay()).fill(null);
+      days.forEach((d) => {
+        col.push(d);
+        if (col.length === 7) { cols.push(col); col = []; }
+      });
+      if (col.length) cols.push(col);
+
+      const lang = document.documentElement.lang || 'zh-CN';
+      const monthLabel = (iso) => new Date(iso + 'T00:00:00')
+        .toLocaleString(lang, { month: 'short' });
+
+      cal.innerHTML = '';
+
+      const summary = document.createElement('div');
+      summary.className = 'gh-cal-summary';
+      summary.textContent = (cfg.summary || '%d').replace('%d', Number(total).toLocaleString());
+      cal.appendChild(summary);
+
+      let lastM = -1;
+      const mrow = document.createElement('div');
+      mrow.className = 'gh-cal-months';
+      mrow.style.gridTemplateColumns = `repeat(${cols.length}, 10px)`;
+      cols.forEach((c) => {
+        const span = document.createElement('span');
+        const d0 = c.find(Boolean);
+        if (d0) {
+          const m = new Date(d0.date + 'T00:00:00').getMonth();
+          if (m !== lastM) { span.textContent = monthLabel(d0.date); lastM = m; }
+        }
+        mrow.appendChild(span);
+      });
+      cal.appendChild(mrow);
+
+      const scroll = document.createElement('div');
+      scroll.className = 'gh-cal-scroll';
+      const grid = document.createElement('div');
+      grid.className = 'gh-cal-grid';
+      grid.style.gridTemplateColumns = `repeat(${cols.length}, 10px)`;
+      cols.forEach((c) => {
+        const colEl = document.createElement('div');
+        colEl.className = 'gh-cal-col';
+        c.forEach((d) => {
+          const cell = document.createElement('div');
+          cell.className = 'gh-cal-cell' + (d ? ' l' + d.level : '');
+          if (d && d.count) cell.title = `${d.date} · ${d.count}`;
+          colEl.appendChild(cell);
+        });
+        grid.appendChild(colEl);
+      });
+      scroll.appendChild(grid);
+      cal.appendChild(scroll);
+
+      const legend = document.createElement('div');
+      legend.className = 'gh-cal-legend';
+      legend.innerHTML = 'Less ' + [0, 1, 2, 3, 4].map((l) =>
+        `<div class="gh-cal-cell l${l}"></div>`).join('') + ' More';
+      cal.appendChild(legend);
+    })
+    .catch(() => { cal.textContent = 'GitHub calendar unavailable'; });
+});

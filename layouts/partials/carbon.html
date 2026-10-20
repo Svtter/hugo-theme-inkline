@@ -1,0 +1,9 @@
+{{/* Carbon Ads：params.carbon.serve / placement 都配置时才渲染 */}}
+{{ $c := site.Params.carbon }}
+{{ if and $c $c.serve $c.placement }}
+<div class="carbon-slot">
+  <script async type="text/javascript"
+    src="//cdn.carbonads.com/carbon.js?serve={{ $c.serve }}&placement={{ $c.placement }}"
+    id="_carbonads_js"></script>
+</div>
+{{ end }}
