@@ -1,3 +1,5 @@
+**简体中文** | [English](README.en.md)
+
 # 墨线 Inkline
 
 终端工程感 × 中文期刊排版的 Hugo 博客主题。为 [svtter.cn](https://svtter.cn) 设计，也可用于任何以中文长文为主的个人博客。
