@@ -7,7 +7,11 @@ aliases:
   - about-hugo
 license: CC BY-NC-ND
 lastmod: "2020-10-09"
-
+menu:
+  main:
+    weight: -90
+    params:
+      icon: user
 ---
 
 > Step by step, one can go a thousand miles.

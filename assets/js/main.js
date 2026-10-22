@@ -137,9 +137,14 @@ document.querySelectorAll('.gh-calendar .calendar[data-user]').forEach((cal) => 
   const user = cal.dataset.user;
   const cfg = (window.INKLINE && window.INKLINE.ghCal) || {};
   const esc = (s) => { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
-  fetch(`https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(user)}?y=last`)
-    .then((r) => r.json())
+  const loadCal = () => fetch(`https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(user)}?y=last`)
+    .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  loadCal()
+    .catch(() => new Promise((r) => setTimeout(r, 1500))
+      .then(loadCal)
+      .catch(() => null))
     .then((data) => {
+      if (!data) { cal.textContent = 'GitHub calendar unavailable'; return; }
       const days = data.contributions || [];
       if (!days.length) { cal.textContent = '—'; return; }
       const total = (data.total && data.total.lastYear) ||

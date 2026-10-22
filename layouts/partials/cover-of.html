@@ -1,4 +1,10 @@
-{{/* 返回页面封面 URL（字符串），无则返回空。兼容 Stack 风格的 map 形式 */}}
+{{/* 返回页面封面 URL（字符串），无则返回空。
+     兼容：完整 URL、站点绝对路径、Stack 风格 map、页面包裸文件名（相对 bundle 解析） */}}
 {{ $c := .Params.cover | default .Params.image }}
 {{ if reflect.IsMap $c }}{{ $c = $c.image }}{{ end }}
+{{ with $c }}
+  {{ if not (or (strings.HasPrefix . "http") (strings.HasPrefix . "/")) }}
+    {{ $c = path.Join $.RelPermalink . }}
+  {{ end }}
+{{ end }}
 {{ return $c | default "" }}

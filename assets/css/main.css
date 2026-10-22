@@ -1449,3 +1449,21 @@ kbd {
   font-family: var(--mono); font-size: .625rem; color: var(--faint); margin-top: 8px;
 }
 .gh-cal-legend .gh-cal-cell { width: 9px; height: 9px; }
+
+/* ------------------------------------------------------------
+   视觉审计修复：长词断行（编码 slug / 长 token 撑破版心）
+   ------------------------------------------------------------ */
+body { overflow-wrap: break-word; }
+.statusline .seg { overflow-wrap: anywhere; min-width: 0; }
+.kicker { overflow-wrap: anywhere; }
+.breadcrumb { overflow-wrap: anywhere; }
+.prose .highlight pre { overflow-x: auto; }
+.prose pre, .prose code { overflow-wrap: break-word; }
+.gh-calendar .card, .calendar { overflow: hidden; }
+
+/* 网格轨道防撑破：pre 长行的 min-content 不再传导到版心 */
+.article-grid > *, .layout > * { min-width: 0; }
+.prose .highlight, .prose .highlight pre { max-width: 100%; }
+
+/* 响应式表格：小屏横向滚动，不撑破版心 */
+.prose table { display: block; overflow-x: auto; }

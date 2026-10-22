@@ -1,6 +1,12 @@
 ---
 title: LLMs
 description: 我的私人 LLM Leaderboard
+menu:
+    main:
+        weight: -50
+        params:
+            icon: brain
+
 comments: false
 ---
 

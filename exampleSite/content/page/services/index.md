@@ -5,7 +5,12 @@ date: 2026-10-13
 type: page
 slug: services
 license: CC BY-NC-ND
-
+menu:
+  main:
+    name: 咨询
+    weight: -80
+    params:
+      icon: messages
 ---
 
 我长期在做 AI 评审与 agent 工程,维护着自己的生产级系统(私有部署,欢迎私聊演示)。如果你在这些方向上有具体问题,可以聊:

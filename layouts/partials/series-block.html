@@ -54,9 +54,10 @@
   </div>
   {{ end }}
 
-  {{ $rel := site.RegularPages.Related . }}
+  {{ $sections := where site.RegularPages "Section" "in" site.MainSections }}
+  {{ $rel := where ($sections.Related .) "Permalink" "!=" $.Permalink }}
   {{ if lt (len $rel) 4 }}
-    {{ range where (site.RegularPages.ByDate.Reverse) "Permalink" "!=" $.Permalink }}
+    {{ range where ($sections.ByDate.Reverse) "Permalink" "!=" $.Permalink }}
       {{ if and (lt (len $rel) 4) (not (in $rel .)) }}{{ $rel = $rel | append . }}{{ end }}
     {{ end }}
   {{ end }}

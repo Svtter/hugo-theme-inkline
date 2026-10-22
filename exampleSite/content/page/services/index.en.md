@@ -5,7 +5,12 @@ date: 2026-10-13
 type: page
 slug: services
 license: CC BY-NC-ND
-
+menu:
+  main:
+    name: Consulting
+    weight: -80
+    params:
+      icon: messages
 ---
 
 I have been working on AI code review and agent engineering for a long time, and I maintain my own production-grade system (privately deployed — happy to demo it on request). If you have concrete questions in these areas, we can talk:

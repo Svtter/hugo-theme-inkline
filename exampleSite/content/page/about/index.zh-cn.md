@@ -5,6 +5,11 @@ type: page
 slug: about
 aliases:
     - /关于/
+menu:
+    main:
+        weight: -90
+        params:
+            icon: user
 tags:
 - About
 ---

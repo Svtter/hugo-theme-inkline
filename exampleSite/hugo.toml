@@ -47,39 +47,21 @@ threshold = 60
   name = "categories"
   weight = 40
 
-[menus]
-  [[menus.main]]
-  name = "文章"
-  url = "/post/"
-  weight = 1
-  [[menus.main]]
-  name = "系列"
-  url = "/series/"
-  weight = 2
-  [[menus.main]]
-  name = "分类"
-  url = "/categories/"
-  weight = 3
-  [[menus.main]]
-  name = "归档"
-  url = "/archives/"
-  weight = 4
-  [[menus.main]]
-  name = "模型"
-  url = "/ai/"
-  weight = 5
-  [[menus.main]]
-  name = "链接"
-  url = "/links/"
-  weight = 6
-  [[menus.main]]
-  name = "咨询"
-  url = "/services/"
-  weight = 7
-  [[menus.main]]
-  name = "关于"
-  url = "/about/"
-  weight = 8
+
+
+# 顶部导航补充项（其余导航来自页面 frontmatter 的 menu 声明）
+[[menus.main]]
+name = "文章"
+pageRef = "/post/"
+weight = -100
+[[menus.main]]
+name = "系列"
+pageRef = "/series/"
+weight = -99
+[[menus.main]]
+name = "分类"
+pageRef = "/categories/"
+weight = -98
 
 [params]
 description = "专注于编程技术、机器学习和开发工具。分享实践经验，探索技术的本质，记录学习的旅程。"

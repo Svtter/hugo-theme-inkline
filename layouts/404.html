@@ -1,12 +1,12 @@
-{{ partial "header.html" . }}
+{{ define "main" }}
 <section class="hero hero-slim">
   <div class="wrap">
     <div class="kicker">// 404 <span class="dim">— NOT FOUND</span></div>
     <h1>{{ i18n "notfound_title" }}</h1>
     <p class="sub">{{ i18n "notfound_body" }}</p>
     <div class="hero-stats">
-      <span class="stat"><a class="btn" href="{{ site.Home.RelPermalink }}">{{ i18n "back_home" }}</a></span>
+      <a class="btn" href="{{ site.Home.RelPermalink }}">{{ i18n "back_home" }}</a>
     </div>
   </div>
 </section>
-{{ partial "footer.html" . }}
+{{ end }}

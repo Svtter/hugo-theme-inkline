@@ -25,8 +25,7 @@
     {{ end }}
     {{ range .GetTerms "categories" }}<span class="cat">{{ .Page.Title }}</span>{{ end }}
     <span class="sep">/</span>
-    <span>{{ .Date.Format "2006-01-02 15:04" }}</span>
-    <span class="sep">/</span>
+    {{ if not .Date.IsZero }}<span>{{ .Date.Format "2006-01-02 15:04" }}</span><span class="sep">/</span>{{ end }}
     <span>{{ i18n "word_count" (dict "n" .WordCount) }} · {{ .ReadingTime }} min</span>
   </div>
 
@@ -54,10 +53,12 @@
   </article>
 
   <aside class="toc">
+    {{ if gt (len .Fragments.Identifiers) 0 }}
     <div class="toc-label"><span class="hash">#</span> {{ i18n "toc" }} · TOC</div>
     <nav id="toc-nav">
       {{ .Fragments.ToHTML 2 3 false }}
     </nav>
+    {{ end }}
     {{ partial "carbon.html" . }}
   </aside>
 </div>
