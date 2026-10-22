@@ -17,7 +17,7 @@
       </a>
       {{ end }}
       {{ with site.Home.OutputFormats.Get "rss" }}
-      <a class="btn primary" href="{{ .Permalink }}" title="RSS 订阅">
+      <a class="btn primary" href="{{ .RelPermalink }}" title="RSS 订阅">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4.4A15.6 15.6 0 0 1 19.6 20h-3A12.6 12.6 0 0 0 4 7.4v-3zm0 6A9.6 9.6 0 0 1 13.6 20h-3A6.6 6.6 0 0 0 4 13.4v-3zM6.5 20a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
         RSS
       </a>
@@ -52,7 +52,7 @@
     <div class="card-label"><span class="hash">#</span> {{ i18n "subscribe" }}</div>
     <p>{{ i18n "subscribe_desc" }}</p>
     <div class="btns">
-      {{ with site.Home.OutputFormats.Get "rss" }}<a class="btn" href="{{ .Permalink }}">/index.xml</a>{{ end }}
+      {{ with site.Home.OutputFormats.Get "rss" }}<a class="btn" href="{{ .RelPermalink }}">/index.xml</a>{{ end }}
       <a class="btn primary" href="#q">邮件订阅</a>
     </div>
   </div>

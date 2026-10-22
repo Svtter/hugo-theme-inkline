@@ -22,7 +22,7 @@
 
 {{ with resources.Get "js/main.js" }}
 {{ with . | minify | fingerprint }}
-<script>window.INKLINE = { searchIndex: {{ "index.json" | relURL }} };</script>
+<script>window.INKLINE = { searchIndex: {{ "index.json" | relURL }}, home: "{{ site.Home.RelPermalink }}" };</script>
 <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
 {{ end }}
 {{ end }}

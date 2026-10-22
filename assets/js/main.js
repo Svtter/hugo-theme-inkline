@@ -57,6 +57,17 @@
 
   /* ---------- 快捷键：/ 或 ⌘K 聚焦搜索 ---------- */
   const q = document.getElementById('q');
+  const focusSearch = () => {
+    if (!q) return;
+    q.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    q.focus({ preventScroll: true });
+  };
+  const btnSearch = document.getElementById('btn-search');
+  if (btnSearch) btnSearch.addEventListener('click', () => {
+    if (q) focusSearch();
+    else if (window.INKLINE && window.INKLINE.home) window.location.href = window.INKLINE.home + '#search';
+  });
+  if (location.hash === '#search' && q) setTimeout(focusSearch, 300);
   if (q) {
     document.addEventListener('keydown', (e) => {
       if ((e.key === '/' && document.activeElement !== q) ||
