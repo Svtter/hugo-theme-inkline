@@ -1,7 +1,7 @@
 name = "Inkline"
 license = "MIT"
 licenselink = "https://github.com/Svtter/hugo-theme-inkline/blob/main/LICENSE"
-description = "墨线 Inkline —— 终端工程感 × 中文期刊排发的 Hugo 博客主题：衬线正文 + 等宽元数据、全局三档字号、深浅双主题、系列目录与相关文章"
+description = "墨线 Inkline —— 终端工程感 × 中文期刊排版的 Hugo 博客主题：衬线正文 + 等宽元数据、全局三档字号、深浅双主题、系列目录与相关文章"
 homepage = "https://github.com/Svtter/hugo-theme-inkline"
 tags = ["blog", "chinese", "typography", "dark mode", "search", "series", "minimal"]
 features = [
