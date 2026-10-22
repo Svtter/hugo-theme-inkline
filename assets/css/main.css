@@ -1467,3 +1467,21 @@ body { overflow-wrap: break-word; }
 
 /* 响应式表格：小屏横向滚动，不撑破版心 */
 .prose table { display: block; overflow-x: auto; }
+
+/* ------------------------------------------------------------
+   顶栏窄屏健壮性 + Hero 移动端排版
+   ------------------------------------------------------------ */
+.topbar-inner { flex-wrap: nowrap; }
+.logotype { flex-shrink: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.top-actions { flex-shrink: 0; margin-left: auto; }
+.hero h1 { text-wrap: balance; }
+
+@media (max-width: 480px) {
+  .wrap { padding: 0 14px; }
+  .topbar-inner { gap: 10px; height: 54px; }
+  .logotype { font-size: .8125rem; }
+  .icon-btn { width: 30px; height: 30px; border-radius: 8px; }
+  .hero-stats { gap: 6px 16px; }
+  .hero-stats .dot { display: none; }
+  .stat b { font-size: .875rem; }
+}
