@@ -21,10 +21,11 @@
       <span class="rule"></span>
     </div>
     <div class="post-list">
-      {{ range .Pages.ByDate.Reverse }}
-      <a class="post-item" href="{{ .RelPermalink }}">
-        <span class="date">{{ .Date.Format "01-02" }}</span>
-        <span class="title">{{ .Title }}</span>
+      {{ range $idx, $p := .Pages.ByDate.Reverse }}
+      <a class="post-item" href="{{ $p.RelPermalink }}">
+        <span class="date">{{ $p.Date.Format "01-02" }}</span>
+        <span class="no">{{ printf "%02d" (add $idx 1) }}</span>
+        <span class="title">{{ $p.Title }}</span>
         <span class="aside">{{ with first 1 (.GetTerms "categories") }}<span class="cat">{{ (index . 0).Page.Title }}</span>{{ end }}<span class="sep">·</span>{{ .ReadingTime }} min</span>
       </a>
       {{ end }}

@@ -43,11 +43,12 @@
       <span class="more">{{ i18n "page_of" (dict "a" $paged.PageNumber "b" $paged.TotalPages) }}</span>
     </div>
     <div class="post-list">
-      {{ range $paged.Pages }}
-      <a class="post-item" href="{{ .RelPermalink }}">
-        <span class="date">{{ .Date.Format "06-01-02" }}</span>
-        <span class="title">{{ .Title }}</span>
-        <span class="aside">{{ with first 1 (.GetTerms "categories") }}<span class="cat">{{ (index . 0).Page.Title }}</span>{{ end }}<span class="sep">·</span>{{ .ReadingTime }} min</span>
+      {{ range $idx, $p := $paged.Pages }}
+      <a class="post-item" href="{{ $p.RelPermalink }}">
+        <span class="date">{{ $p.Date.Format "06-01-02" }}</span>
+        <span class="no">{{ printf "%03d" (add (mul (sub $paged.PageNumber 1) $paged.PagerSize) $idx 1) }}</span>
+        <span class="title">{{ $p.Title }}</span>
+        <span class="aside">{{ with first 1 ($p.GetTerms "categories") }}<span class="cat">{{ (index . 0).Page.Title }}</span>{{ end }}<span class="sep">·</span>{{ $p.ReadingTime }} min</span>
       </a>
       {{ end }}
     </div>
