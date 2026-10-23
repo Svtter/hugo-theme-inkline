@@ -70,7 +70,7 @@ github = "https://github.com/svtter"
 
 [newsletter]
 label = "Subscribe to get new posts delivered to your inbox."
-action = ""                       # Form action URL; leave empty for display only
+action = ""        # omit to hide the form
 
 [github_calendar]
 enable = true

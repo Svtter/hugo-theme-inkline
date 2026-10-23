@@ -18,6 +18,10 @@
 {{ with site.Config.Services.GoogleAnalytics.ID }}
 {{ template "_internal/google_analytics.html" $ }}
 {{ end }}
+{{/* 站点级 head 扩展点：存在 partials/head/custom.html 时调用（统计脚本等） */}}
+{{ if templates.Exists "partials/head/custom.html" }}
+{{ partial "head/custom.html" . }}
+{{ end }}
 {{ with resources.Get "css/main.css" }}
 {{ with . | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">

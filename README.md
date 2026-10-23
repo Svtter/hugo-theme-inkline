@@ -70,7 +70,7 @@ github = "https://github.com/svtter"
 
 [newsletter]
 label = "订阅以获取最新文章更新，第一时间送达你的邮箱"
-action = ""                       # 表单提交地址，留空仅展示
+action = ""        # 留空则隐藏表单
 
 [github_calendar]
 enable = true

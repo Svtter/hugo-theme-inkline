@@ -1,9 +1,7 @@
 {{ $host := (urls.Parse site.BaseURL).Hostname }}
 {{ $seriesCount := len site.Taxonomies.series }}
 {{ $postCount := len (where site.RegularPages "Section" "in" site.MainSections) }}
-{{ $years := (where site.RegularPages "Section" "in" site.MainSections).GroupByDate "2006" "asc" }}
-{{ $minYear := "" }}{{ range $years }}{{ if or (not $minYear) (lt .Key $minYear) }}{{ $minYear = .Key }}{{ end }}{{ end }}
-{{ if or (not $minYear) (lt (int $minYear) 2000) }}{{ $minYear = string now.Year }}{{ end }}
+{{ $minYear := now.Year }}{{ range site.RegularPages }}{{ $y := .Date.Year }}{{ if and (gt $y 2000) (lt $y $minYear) }}{{ $minYear = $y }}{{ end }}{{ end }}
 <section class="hero">
   <div class="wrap hero-grid{{ with site.Params.hero.image }} has-right{{ end }}">
     <div class="hero-left">
@@ -13,7 +11,7 @@
 
       <div class="hero-stats">
         <span class="stat"><b>{{ $postCount }}</b> {{ i18n "stats_posts" }}</span>
-        <span class="stat"><b>{{ sub now.Year (int $minYear) }}</b> {{ i18n "stats_years" }}</span>
+        <span class="stat"><b>{{ sub now.Year $minYear }}</b> {{ i18n "stats_years" }}</span>
         <span class="stat"><b>{{ $seriesCount }}</b> {{ i18n "stats_series" }}</span>
         <span class="stat"><b>{{ site.Params.license | default "CC BY-NC-SA" }}</b> {{ i18n "stats_license" }}</span>
       </div>
@@ -24,10 +22,12 @@
 
       <div class="newsletter" id="newsletter">
         <span class="nl-label">{{ site.Params.newsletter.label | default (i18n "newsletter_label") }}</span>
-        <form class="nl-form" action="{{ site.Params.newsletter.action | default "#" }}">
+        {{ with site.Params.newsletter.action }}
+        <form class="nl-form" action="{{ . }}">
           <input type="email" placeholder="输入您的邮箱地址" required>
           <button class="nl-btn" type="submit">{{ i18n "subscribe" }}</button>
         </form>
+        {{ end }}
       </div>
     </div>
 
