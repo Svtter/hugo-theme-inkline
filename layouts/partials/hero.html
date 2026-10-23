@@ -18,20 +18,11 @@
       <span class="stat"><span class="dot">·</span> <b>{{ site.Params.license | default "CC BY-NC-SA" }}</b> {{ i18n "stats_license" }}</span>
     </div>
 
-    <div class="cmdzone" id="search">
-      <label class="cmdline" for="q">
-        <span class="prompt">&gt;_</span>
-        <input id="q" type="search" placeholder="{{ i18n "search_placeholder" }}" autocomplete="off">
-        <kbd>/</kbd>
-      </label>
-      <div class="search-results" id="search-results" hidden></div>
-    </div>
-
     <div class="topics">
       {{ range site.Params.topics }}<span class="topic">{{ . }}</span>{{ end }}
     </div>
 
-    <div class="newsletter">
+    <div class="newsletter" id="newsletter">
       <span class="nl-label">{{ site.Params.newsletter.label | default (i18n "newsletter_label") }}</span>
       <form class="nl-form" action="{{ site.Params.newsletter.action | default "#" }}">
         <input type="email" placeholder="输入您的邮箱地址" required>
