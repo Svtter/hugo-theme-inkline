@@ -62,6 +62,9 @@ license = "CC BY-NC-SA 4.0"
 topics = ["编程", "机器学习", "开发工具"]        # Hero 话题胶囊
 favicon = "/favicon.png"
 
+[hero]
+image = "https://…/hero.jpg"      # Hero 右侧配图 URL；不设则为纯文字版式
+
 [social]
 github = "https://github.com/svtter"
 

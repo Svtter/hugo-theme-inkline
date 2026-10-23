@@ -62,6 +62,9 @@ license = "CC BY-NC-SA 4.0"
 topics = ["Programming", "Machine Learning"]   # Hero topic pills
 favicon = "/favicon.png"
 
+[hero]
+image = "https://…/hero.jpg"      # Hero image URL; omit for text-only hero
+
 [social]
 github = "https://github.com/svtter"
 

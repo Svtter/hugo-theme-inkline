@@ -5,7 +5,7 @@
 {{ $minYear := "" }}{{ range $years }}{{ if or (not $minYear) (lt .Key $minYear) }}{{ $minYear = .Key }}{{ end }}{{ end }}
 {{ if or (not $minYear) (lt (int $minYear) 2000) }}{{ $minYear = string now.Year }}{{ end }}
 <section class="hero">
-  <div class="wrap hero-grid">
+  <div class="wrap hero-grid{{ with site.Params.hero.image }} has-right{{ end }}">
     <div class="hero-left">
       <div class="kicker">// {{ site.Title | upper }} <span class="dim">— EST. {{ $minYear }} · {{ i18n "roles" }}</span></div>
       <h1>{{ site.Params.motto | default (i18n "default_motto") }}</h1>
@@ -31,25 +31,10 @@
       </div>
     </div>
 
+    {{ with site.Params.hero.image }}
     <div class="hero-right">
-      {{ with site.Params.hero.image }}
       <img class="hero-img" src="{{ . }}" alt="">
-      {{ else }}
-      <div class="term" aria-hidden="true">
-        <div class="term-bar"><span class="dots">● ● ●</span><span>~/{{ $host }}/blog — zsh</span></div>
-        <div class="term-body">
-          <div class="term-line"><span class="p">$</span> whoami</div>
-          <div class="term-line out">{{ i18n "roles" }}</div>
-          <div class="term-line"><span class="p">$</span> ls posts | wc -l</div>
-          <div class="term-line out"><span class="g">{{ $postCount }}</span></div>
-          <div class="term-line"><span class="p">$</span> hugo --minify</div>
-          <div class="term-line out"><span class="g">✓</span> {{ i18n "term_built" }}</div>
-          <div class="term-line"><span class="p">$</span> git push origin master</div>
-          <div class="term-line out"><span class="g">✓</span> svtter.cn {{ i18n "term_updated" }}</div>
-          <div class="term-line"><span class="p">$</span> <span class="term-cursor"></span></div>
-        </div>
-      </div>
-      {{ end }}
     </div>
+    {{ end }}
   </div>
 </section>
