@@ -1,33 +1,55 @@
 {{ $host := (urls.Parse site.BaseURL).Hostname }}
 {{ $seriesCount := len site.Taxonomies.series }}
-{{ $catsCount := len site.Taxonomies.categories }}
 {{ $postCount := len (where site.RegularPages "Section" "in" site.MainSections) }}
 {{ $years := (where site.RegularPages "Section" "in" site.MainSections).GroupByDate "2006" "asc" }}
 {{ $minYear := "" }}{{ range $years }}{{ if or (not $minYear) (lt .Key $minYear) }}{{ $minYear = .Key }}{{ end }}{{ end }}
 {{ if or (not $minYear) (lt (int $minYear) 2000) }}{{ $minYear = string now.Year }}{{ end }}
 <section class="hero">
-  <div class="wrap">
-    <div class="kicker">// {{ site.Title | upper }} <span class="dim">— EST. {{ $minYear }} · {{ i18n "roles" }}</span></div>
-    <h1>{{ site.Params.motto | default (i18n "default_motto") }}</h1>
-    <p class="sub">{{ site.Params.description }}</p>
+  <div class="wrap hero-grid">
+    <div class="hero-left">
+      <div class="kicker">// {{ site.Title | upper }} <span class="dim">— EST. {{ $minYear }} · {{ i18n "roles" }}</span></div>
+      <h1>{{ site.Params.motto | default (i18n "default_motto") }}</h1>
+      <p class="sub">{{ site.Params.description }}</p>
 
-    <div class="hero-stats">
-      <span class="stat"><b>{{ $postCount }}</b> {{ i18n "stats_posts" }}</span>
-      <span class="stat"><span class="dot">·</span> <b>{{ sub now.Year (int $minYear) }}</b> {{ i18n "stats_years" }}</span>
-      <span class="stat"><span class="dot">·</span> <b>{{ $seriesCount }}</b> {{ i18n "stats_series" }}</span>
-      <span class="stat"><span class="dot">·</span> <b>{{ site.Params.license | default "CC BY-NC-SA" }}</b> {{ i18n "stats_license" }}</span>
+      <div class="hero-stats">
+        <span class="stat"><b>{{ $postCount }}</b> {{ i18n "stats_posts" }}</span>
+        <span class="stat"><b>{{ sub now.Year (int $minYear) }}</b> {{ i18n "stats_years" }}</span>
+        <span class="stat"><b>{{ $seriesCount }}</b> {{ i18n "stats_series" }}</span>
+        <span class="stat"><b>{{ site.Params.license | default "CC BY-NC-SA" }}</b> {{ i18n "stats_license" }}</span>
+      </div>
+
+      <div class="topics">
+        {{ range site.Params.topics }}<span class="topic">{{ . }}</span>{{ end }}
+      </div>
+
+      <div class="newsletter" id="newsletter">
+        <span class="nl-label">{{ site.Params.newsletter.label | default (i18n "newsletter_label") }}</span>
+        <form class="nl-form" action="{{ site.Params.newsletter.action | default "#" }}">
+          <input type="email" placeholder="输入您的邮箱地址" required>
+          <button class="nl-btn" type="submit">{{ i18n "subscribe" }}</button>
+        </form>
+      </div>
     </div>
 
-    <div class="topics">
-      {{ range site.Params.topics }}<span class="topic">{{ . }}</span>{{ end }}
-    </div>
-
-    <div class="newsletter" id="newsletter">
-      <span class="nl-label">{{ site.Params.newsletter.label | default (i18n "newsletter_label") }}</span>
-      <form class="nl-form" action="{{ site.Params.newsletter.action | default "#" }}">
-        <input type="email" placeholder="输入您的邮箱地址" required>
-        <button class="nl-btn" type="submit">{{ i18n "subscribe" }}</button>
-      </form>
+    <div class="hero-right">
+      {{ with site.Params.hero.image }}
+      <img class="hero-img" src="{{ . }}" alt="">
+      {{ else }}
+      <div class="term" aria-hidden="true">
+        <div class="term-bar"><span class="dots">● ● ●</span><span>~/{{ $host }}/blog — zsh</span></div>
+        <div class="term-body">
+          <div class="term-line"><span class="p">$</span> whoami</div>
+          <div class="term-line out">{{ i18n "roles" }}</div>
+          <div class="term-line"><span class="p">$</span> ls posts | wc -l</div>
+          <div class="term-line out"><span class="g">{{ $postCount }}</span></div>
+          <div class="term-line"><span class="p">$</span> hugo --minify</div>
+          <div class="term-line out"><span class="g">✓</span> {{ i18n "term_built" }}</div>
+          <div class="term-line"><span class="p">$</span> git push origin master</div>
+          <div class="term-line out"><span class="g">✓</span> svtter.cn {{ i18n "term_updated" }}</div>
+          <div class="term-line"><span class="p">$</span> <span class="term-cursor"></span></div>
+        </div>
+      </div>
+      {{ end }}
     </div>
   </div>
 </section>
