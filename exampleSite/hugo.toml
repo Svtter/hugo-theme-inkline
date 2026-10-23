@@ -79,7 +79,7 @@ topics = ["编程", "机器学习", "开发工具", "Agent 工程", "技术写�
 
 [params.newsletter]
 label = "订阅以获取最新文章更新，第一时间送达你的邮箱"
-action = ""
+action = "#"
 
 [params.github_calendar]
 enable = true
