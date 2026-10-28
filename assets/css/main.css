@@ -1525,7 +1525,7 @@ body { overflow-wrap: break-word; }
 .hero-img { width: 100%; border-radius: 14px; border: 1px solid var(--line); box-shadow: var(--shadow); }
 
 @media (max-width: 1020px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 0; }
+  .hero-grid, .has-right.hero-grid { grid-template-columns: 1fr; gap: 0; }
   .hero-right { display: none; }
 }
 .hero-stats { gap: 8px 24px; }
