@@ -1,5 +1,9 @@
-{{/* 归档年度柱状图：按年分组，峰值年高亮 */}}
-{{ $groups := (where site.RegularPages "Section" "in" site.MainSections).GroupByDate "2006" "asc" }}
+{{/* 归档年度柱状图：按年分组，峰值年高亮；缺 date 的页面（零值时间）不参与统计 */}}
+{{ $pages := slice }}
+{{ range where site.RegularPages "Section" "in" site.MainSections }}
+  {{ if not .Date.IsZero }}{{ $pages = $pages | append . }}{{ end }}
+{{ end }}
+{{ $groups := $pages.GroupByDate "2006" "asc" }}
 {{ $max := 0 }}
 {{ range $groups }}{{ if gt .Len $max }}{{ $max = .Len }}{{ end }}{{ end }}
 {{ $asc := slice }}
@@ -17,5 +21,5 @@
   <div class="archive-years">
     {{ range $asc }}<span>{{ strings.TrimPrefix "20" .Key }}</span>{{ end }}
   </div>
-  <div class="archive-note">{{ len $asc }} {{ i18n "years_unit" }} <b>{{ len (where site.RegularPages "Section" "in" site.MainSections) }}</b> {{ i18n "posts_unit" }} · {{ i18n "peak" }} <b>{{ $max }}</b> 篇</div>
+  <div class="archive-note">{{ len $asc }} {{ i18n "years_unit" }} <b>{{ len $pages }}</b> {{ i18n "posts_unit" }} · {{ i18n "peak" }} <b>{{ $max }}</b> 篇</div>
 </div>
