@@ -203,6 +203,11 @@ kbd {
 #btn-theme .i-moon { display: none; }
 [data-theme="dark"] #btn-theme .i-sun { display: none; }
 [data-theme="dark"] #btn-theme .i-moon { display: block; }
+/* 三态切换：跟随系统时显示显示器图标 */
+#btn-theme .i-auto { display: none; }
+#btn-theme[data-mode="system"] .i-sun,
+#btn-theme[data-mode="system"] .i-moon { display: none; }
+#btn-theme[data-mode="system"] .i-auto { display: block; }
 
 /* ------------------------------------------------------------
    Hero

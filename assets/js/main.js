@@ -6,16 +6,32 @@
   'use strict';
   const root = document.documentElement;
 
-  /* ---------- 主题切换（记忆选择，默认跟随系统） ---------- */
-  const saved = localStorage.getItem('inkline-theme');
-  if (saved) root.dataset.theme = saved;
-  else if (window.matchMedia('(prefers-color-scheme: dark)').matches) root.dataset.theme = 'dark';
+  /* ---------- 主题三态：跟随系统 / 浅色 / 深色（默认跟随系统） ---------- */
+  const THEME_KEY = 'inkline-theme';
+  const mqDark = window.matchMedia('(prefers-color-scheme: dark)');
+  const themeOrder = ['system', 'light', 'dark'];
+  const themeLabel = { system: '跟随系统', light: '浅色', dark: '深色' };
+  const themeChoice = () => {
+    const t = localStorage.getItem(THEME_KEY);
+    return themeOrder.includes(t) ? t : 'system';
+  };
+  function applyTheme() {
+    const choice = themeChoice();
+    if (choice === 'dark' || (choice === 'system' && mqDark.matches)) root.dataset.theme = 'dark';
+    else delete root.dataset.theme;
+    const btn = document.getElementById('btn-theme');
+    if (btn) {
+      btn.dataset.mode = choice;
+      btn.title = `主题：${themeLabel[choice]}（点击切换）`;
+    }
+  }
+  mqDark.addEventListener('change', () => { if (themeChoice() === 'system') applyTheme(); });
+  applyTheme();
 
   const btnTheme = document.getElementById('btn-theme');
   if (btnTheme) btnTheme.addEventListener('click', () => {
-    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    localStorage.setItem('inkline-theme', next);
+    localStorage.setItem(THEME_KEY, themeOrder[(themeOrder.indexOf(themeChoice()) + 1) % themeOrder.length]);
+    applyTheme();
   });
 
   /* ---------- 字号三档：小 / 中 / 大（全局根字号，记忆选择） ---------- */
