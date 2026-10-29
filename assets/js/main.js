@@ -202,23 +202,38 @@
         summary.textContent = (cfg.summary || '%d').replace('%d', Number(total).toLocaleString());
         cal.appendChild(summary);
 
+        const scroll = document.createElement('div');
+        scroll.className = 'gh-cal-scroll';
+
         let lastM = -1;
+        let covered = 0;
         const mrow = document.createElement('div');
         mrow.className = 'gh-cal-months';
         mrow.style.gridTemplateColumns = `repeat(${cols.length}, 10px)`;
-        cols.forEach((c) => {
+        cols.forEach((c, i) => {
+          if (covered > 0) { covered--; return; }
           const span = document.createElement('span');
           const d0 = c.find(Boolean);
           if (d0) {
             const m = new Date(d0.date + 'T00:00:00').getMonth();
-            if (m !== lastM) { span.textContent = monthLabel(d0.date); lastM = m; }
+            if (m !== lastM) {
+              let k = 1;
+              for (let j = i + 1; j < cols.length; j++) {
+                const d1 = cols[j].find(Boolean);
+                if (d1 && new Date(d1.date + 'T00:00:00').getMonth() !== m) break;
+                k++;
+              }
+              if (k >= 2) {
+                span.textContent = monthLabel(d0.date);
+                span.style.gridColumn = `span ${k}`;
+                covered = k - 1;
+                lastM = m;
+              }
+            }
           }
           mrow.appendChild(span);
         });
-        cal.appendChild(mrow);
 
-        const scroll = document.createElement('div');
-        scroll.className = 'gh-cal-scroll';
         const grid = document.createElement('div');
         grid.className = 'gh-cal-grid';
         grid.style.gridTemplateColumns = `repeat(${cols.length}, 10px)`;
@@ -226,13 +241,26 @@
           const colEl = document.createElement('div');
           colEl.className = 'gh-cal-col';
           c.forEach((d) => {
-            const cell = document.createElement('div');
-            cell.className = 'gh-cal-cell' + (d ? ' l' + d.level : '');
-            if (d && d.count) cell.title = `${d.date} · ${d.count}`;
+            let cell;
+            if (d) {
+              cell = document.createElement('a');
+              cell.href = `https://github.com/${user}?tab=overview&from=${d.date}&to=${d.date}`;
+              cell.target = '_blank';
+              cell.rel = 'noopener';
+              cell.className = 'gh-cal-cell l' + d.level;
+              if (d.count) {
+                cell.title = `${d.date} · ${d.count}`;
+                cell.setAttribute('aria-label', `${d.date}：${d.count} 次贡献`);
+              }
+            } else {
+              cell = document.createElement('div');
+              cell.className = 'gh-cal-cell';
+            }
             colEl.appendChild(cell);
           });
           grid.appendChild(colEl);
         });
+        scroll.appendChild(mrow);
         scroll.appendChild(grid);
         cal.appendChild(scroll);
 

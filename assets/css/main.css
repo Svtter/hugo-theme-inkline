@@ -1419,11 +1419,12 @@ kbd {
 .gh-cal-months {
   display: grid; gap: 3px; min-width: max-content;
   font-family: var(--mono); font-size: .5625rem; color: var(--faint);
-  margin-bottom: 2px; height: .75rem;
+  margin-bottom: 2px; height: .75rem; white-space: nowrap;
 }
 .gh-cal-grid { display: grid; grid-auto-flow: column; gap: 3px; min-width: max-content; }
 .gh-cal-col { display: grid; grid-auto-flow: row; gap: 3px; }
 .gh-cal-cell { width: 10px; height: 10px; border-radius: 2px; background: var(--surface-2); }
+a.gh-cal-cell:hover { outline: 1px solid var(--faint); outline-offset: 1px; }
 .gh-cal-cell.l1 { background: color-mix(in srgb, var(--accent) 25%, var(--bg)); }
 .gh-cal-cell.l2 { background: color-mix(in srgb, var(--accent) 45%, var(--bg)); }
 .gh-cal-cell.l3 { background: color-mix(in srgb, var(--accent) 70%, var(--bg)); }
