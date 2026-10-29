@@ -1478,6 +1478,25 @@ body { overflow-wrap: break-word; }
   .stat b { font-size: .875rem; }
 }
 
+/* 移动端顶栏：菜单降级为第二行横向滚动，保证全部菜单项可点 */
+@media (max-width: 680px) {
+  .topbar-inner { flex-wrap: wrap; height: auto; padding-top: 8px; row-gap: 0; }
+  .nav {
+    display: flex;
+    order: 3;
+    flex-basis: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { flex: 0 0 auto; padding: 6px 10px; font-size: .8125rem; }
+}
+@media (max-width: 480px) {
+  .topbar-inner { height: auto; }
+}
+
 /* ------------------------------------------------------------
    搜索弹窗（⌘K / / / 顶栏按钮）
    ------------------------------------------------------------ */
