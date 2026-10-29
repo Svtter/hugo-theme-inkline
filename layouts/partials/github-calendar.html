@@ -4,7 +4,7 @@
 {{ $user := $gc.username | default (strings.TrimPrefix "https://github.com/" site.Params.social.github) }}
 {{ if $user }}
 <div class="card gh-calendar">
-  <div class="card-label"><span class="hash">#</span> GitHub · {{ $user }}</div>
+  <div class="card-label"><span class="hash">#</span> <a href="https://github.com/{{ $user }}" target="_blank" rel="noopener">GitHub · {{ $user }}</a></div>
   <div class="calendar" data-user="{{ $user }}"></div>
 </div>
 <script>

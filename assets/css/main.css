@@ -965,6 +965,8 @@ kbd {
   margin-bottom: 14px;
 }
 .card-label .hash { color: var(--accent); }
+.card-label a { color: inherit; text-decoration: none; }
+.card-label a:hover { color: var(--accent); }
 
 /* 档案卡 */
 .profile { text-align: left; }
