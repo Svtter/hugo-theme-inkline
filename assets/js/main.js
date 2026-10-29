@@ -205,14 +205,13 @@
         const scroll = document.createElement('div');
         scroll.className = 'gh-cal-scroll';
 
+        // 时间从左（最新）流向右（最旧）：列倒序，月份标签按倒序后的位置重排
+        const rcols = cols.slice().reverse();
+        const labels = [];
         let lastM = -1;
         let covered = 0;
-        const mrow = document.createElement('div');
-        mrow.className = 'gh-cal-months';
-        mrow.style.gridTemplateColumns = `repeat(${cols.length}, 10px)`;
         cols.forEach((c, i) => {
           if (covered > 0) { covered--; return; }
-          const span = document.createElement('span');
           const d0 = c.find(Boolean);
           if (d0) {
             const m = new Date(d0.date + 'T00:00:00').getMonth();
@@ -224,20 +223,32 @@
                 k++;
               }
               if (k >= 2) {
-                span.textContent = monthLabel(d0.date);
-                span.style.gridColumn = `span ${k}`;
+                labels.push({ pos: cols.length - i - k, k, text: monthLabel(d0.date) });
                 covered = k - 1;
                 lastM = m;
               }
             }
           }
-          mrow.appendChild(span);
         });
+
+        const mrow = document.createElement('div');
+        mrow.className = 'gh-cal-months';
+        mrow.style.gridTemplateColumns = `repeat(${rcols.length}, 10px)`;
+        let cursor = 0;
+        labels.sort((a, b) => a.pos - b.pos).forEach((L) => {
+          for (let t = cursor; t < L.pos; t++) mrow.appendChild(document.createElement('span'));
+          const span = document.createElement('span');
+          span.textContent = L.text;
+          span.style.gridColumn = `span ${L.k}`;
+          mrow.appendChild(span);
+          cursor = L.pos + L.k;
+        });
+        for (let t = cursor; t < rcols.length; t++) mrow.appendChild(document.createElement('span'));
 
         const grid = document.createElement('div');
         grid.className = 'gh-cal-grid';
-        grid.style.gridTemplateColumns = `repeat(${cols.length}, 10px)`;
-        cols.forEach((c) => {
+        grid.style.gridTemplateColumns = `repeat(${rcols.length}, 10px)`;
+        rcols.forEach((c) => {
           const colEl = document.createElement('div');
           colEl.className = 'gh-cal-col';
           c.forEach((d) => {
