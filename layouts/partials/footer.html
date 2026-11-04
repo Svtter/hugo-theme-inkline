@@ -22,7 +22,15 @@
 
 {{ with resources.Get "js/main.js" }}
 {{ with . | minify | fingerprint }}
-<script>window.INKLINE = { searchIndex: {{ "index.json" | relURL }}, home: "{{ site.Home.RelPermalink }}" };</script>
+<script>window.INKLINE = { searchIndex: {{ "index.json" | relURL }}, home: "{{ site.Home.RelPermalink }}", share: { copied: "{{ i18n "share_copied" }}", copyFailed: "{{ i18n "share_copy_failed" }}", qrFailed: "{{ i18n "share_qr_failed" }}", qr: "{{ (resources.Get "js/vendor/qrcode.js" | minify | fingerprint).RelPermalink }}" } };</script>
 <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{ end }}
+{{ end }}
+{{/* 分享按钮只在正文页加载（partial share.html / assets/js/share.js） */}}
+{{ if .IsPage }}
+{{ with resources.Get "js/share.js" }}
+{{ with . | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{ end }}
 {{ end }}
 {{ end }}

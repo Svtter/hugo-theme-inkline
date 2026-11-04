@@ -27,6 +27,7 @@
     <span class="sep">/</span>
     {{ if not .Date.IsZero }}<span>{{ .Date.Format "2006-01-02 15:04" }}</span><span class="sep">/</span>{{ end }}
     <span>{{ i18n "word_count" (dict "n" .WordCount) }} · {{ .ReadingTime }} min</span>
+    {{ if ne .Params.share false }}{{ partial "share.html" . }}{{ end }}
   </div>
 
   <h1>{{ .Title }}</h1>
