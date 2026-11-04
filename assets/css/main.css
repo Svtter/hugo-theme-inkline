@@ -1021,7 +1021,8 @@ kbd {
 .related a:hover .rt { color: var(--accent); }
 
 
-侧栏
+/* ------------------------------------------------------------
+   侧栏
    ------------------------------------------------------------ */
 .sidebar { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 84px; align-self: start; }
 
