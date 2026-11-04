@@ -1,14 +1,17 @@
-{{/* 分页条：传入 .Paginator 上下文 */}}
+{{/* 分页条：传入 .Paginator 上下文。窗口跟随当前页（±2），首页/末页固定，跳过的区间显示省略号 */}}
 {{ if gt .TotalPages 1 }}
 <nav class="pagination">
   {{ if .HasPrev }}<a class="page prev" href="{{ .Prev.URL }}">{{ i18n "page_prev" }}</a>{{ end }}
+  {{ $prevShown := false }}
   {{ range .Pagers }}
   {{ $n := .PageNumber }}
-  {{ if eq $n 1 }}<span class="page{{ if eq $n $.PageNumber }} current{{ end }}"><a href="{{ .URL }}">1</a></span>
-  {{ else if or (le $n 3) (gt $n (sub $.TotalPages 1)) }}
-  <span class="page{{ if eq $n $.PageNumber }} current{{ end }}"><a href="{{ .URL }}">{{ $n }}</a></span>
-  {{ else if eq $n 4 }}
-  <span class="page gap">…</span>
+  {{ $show := or (eq $n 1) (eq $n $.TotalPages) (and (ge $n (sub $.PageNumber 2)) (le $n (add $.PageNumber 2))) }}
+  {{ if $show }}
+  {{ if and (not $prevShown) (gt $n 1) }}<span class="page gap">…</span>{{ end }}
+  <span class="page{{ if eq $n $.PageNumber }} current{{ end }}"{{ if eq $n $.PageNumber }} aria-current="page"{{ end }}><a href="{{ .URL }}">{{ $n }}</a></span>
+  {{ $prevShown = true }}
+  {{ else }}
+  {{ $prevShown = false }}
   {{ end }}
   {{ end }}
   {{ if .HasNext }}<a class="page next" href="{{ .Next.URL }}">{{ i18n "page_next" }}</a>{{ end }}

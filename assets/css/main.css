@@ -557,6 +557,78 @@ kbd {
 }
 .meta-row .series:hover { border-color: var(--accent); color: var(--accent); }
 
+/* 文章分享：meta 行右侧下拉（Markdown 链接 / 链接 / 微博 / X / 微信扫码） */
+.share { position: relative; margin-left: auto; }
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: .04em;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.share-btn:hover, .share.open .share-btn { border-color: var(--accent); color: var(--accent); }
+.share-btn svg { width: 13px; height: 13px; }
+
+.share-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 196px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  display: none;
+  z-index: 60;
+}
+.share.open .share-menu { display: block; }
+.share-menu > button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 11px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.share-menu > button:hover { background: var(--surface-2); color: var(--ink); }
+.share-menu > button svg { width: 15px; height: 15px; flex: none; opacity: .8; }
+.share-sep { height: 1px; margin: 5px 6px; background: var(--line); }
+.share-qr { padding: 12px 10px 8px; text-align: center; }
+.share-qr-img svg {
+  display: block;
+  width: 148px;
+  height: 148px;
+  margin: 0 auto;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.share-qr-hint {
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--faint);
+  letter-spacing: .05em;
+}
+
 .article-head h1 {
   font-family: var(--serif);
   font-weight: 900;
